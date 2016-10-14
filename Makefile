@@ -6,13 +6,14 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/05 06:35:31 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/14 04:13:31 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=fractol
 
-SRC_NAME =	draw_line.c
+SRC_NAME =	main.c\
+			mandel.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC_PATH = ./src/
