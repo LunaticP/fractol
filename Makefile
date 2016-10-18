@@ -6,25 +6,27 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/14 04:13:31 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/18 16:45:18 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=fractol
 
 SRC_NAME =	main.c\
-			mandel.c
+			mandel.c\
+			julia.c\
+			graphic.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC_PATH = ./src/
 OBJ_PATH = ./obj/
 SRC=$(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ=$(addprefix $(OBJ_PATH),$(OBJ_NAME))
-INC=-I ./include -I./libft -I ./libmlx
-ARG=-L ./libft -lft -lmlx\
-	-framework OpenGl -framework AppKit
+INC=-I./include -I./libft -I ./libmlx
+ARG=-L./libft -lft -lmlx -lpthread -framework OpenGl -framework AppKit
 CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
+	@printf "\e[33m$(NAME)\e[32m [OK]\n"
 
 $(NAME): lib $(OBJ)
 	@gcc $(CFLAGS) $(ARG) $(INC) $(OBJ) -o $@
@@ -43,6 +45,8 @@ clean:
 fclean: clean
 	-@rm $(NAME)
 	@make -C ./libft $@
+	@printf "\e[33m$(NAME)\e[31m cleaned\n"
+
 
 re: fclean all
 
