@@ -6,29 +6,26 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:53:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/18 16:18:59 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/20 00:22:41 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
 #include <OpenCL/cl.h>
 
-void	fract(void *t)
+void	mandel(t_threads *threads)
 {
-	t_threads *threads;
-
-	threads = (t_threads *)t;
 	t_mandel	m;
-	m.x1 = (-2.1 + (2.1 - threads->d.zoom)) + threads->d.x_pos;
-	m.y1 = (-1.2 + (1.2 - threads->d.zoom)) + threads->d.y_pos;
-	m.x2 = (0.6 - (0.6 - threads->d.zoom)) + threads->d.x_pos;
-	m.y2 = (1.2 - (1.2 - threads->d.zoom)) + threads->d.y_pos;
+	m.x1 = (-2.1 + (2.1 - threads->d->zoom)) + threads->d->x_pos;
+	m.y1 = (-1.2 + (1.2 - threads->d->zoom)) + threads->d->y_pos;
+	m.x2 = (0.6 - (0.6 - threads->d->zoom)) + threads->d->x_pos;
+	m.y2 = (1.2 - (1.2 - threads->d->zoom)) + threads->d->y_pos;
 	m.zoomx = WSIZE / (m.x2 - m.x1);
 	m.zoomy = WSIZE / (m.y2 - m.y1);
 	m.image_x_init = (m.x2 - m.x1) * m.zoomx;
 	m.image_x = m.image_x_init;
 	m.image_y = (m.y2 - m.y1) * m.zoomy;
-	int max = 20;
+	int max = threads->d->iter;
 	int col;
 
 	m.y = 0;
@@ -54,7 +51,7 @@ void	fract(void *t)
 				m.i++;
 				col += exp(-fabs(log(max / (double)m.i) + ((double)m.i * (z_i * z_r)))) * 255;
 			}
-/*			if (m.i < max)
+			if (m.i < max)
 			{
 				long double log_zn = log(z_r * z_r + z_i * z_i) / 2.0;
 				long double nu = log(log_zn / log(2)) / log(2);
@@ -69,13 +66,13 @@ void	fract(void *t)
 				int	r = lerp(r1, r2, i - (long)i);
 				int	g = lerp(g1, g2, i - (long)i);
 				int	b = lerp(b1, b2, i - (long)i);
-				data->color = get_color(r, g, b);
-			}*/
-			if (m.i < max)
-				threads->d.color = threads->col;
+				threads->d->color = get_color(r, g, b);
+			}
+//			if (m.i < max)
+//				threads->d->color = threads->col;
 			else
-				threads->d.color = 0;
-			put_px(&threads->d, m.x, m.y);
+				threads->d->color = 0;
+			put_px(threads->d, m.x, m.y);
 			m.x++;
 		}
 		m.y++;

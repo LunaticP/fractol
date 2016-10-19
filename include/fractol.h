@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/18 16:49:35 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/20 00:32:40 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "key.h"
 # include "mlx.h"
 # include "libft.h"
+#include "key.h"
 # include <math.h>
 # include <pthread.h>
 
@@ -33,7 +34,8 @@ typedef struct	s_data
 	int			endian;
 	int			color;
 	int			iter;
-	int			test;
+	int			key;
+	short		fractal;
 	long double	x_pos;
 	long double	y_pos;
 	long double	zoom;
@@ -64,9 +66,13 @@ typedef struct	s_mandel
 }				t_mandel;
 
 float	lerp(float v0, float v1, float t);
-void	fract(void *d);
-void	julia(t_data *data);
+void	fract(void *t);
+void	mandel(t_threads *threads);
+void	julia(t_threads *threads);
 void	put_px(t_data *data, int x, int y);
+int		k_press(int key, t_data *d);
+int		k_rel(int key, t_data *d);
+void	k_apply(t_data *d);
 int		get_color(int r, int g, int b);
 
 #endif
