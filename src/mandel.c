@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:53:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 00:22:41 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/20 08:49:38 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	mandel(t_threads *threads)
 {
 	t_mandel	m;
 	m.x1 = (-2.1 + (2.1 - threads->d->zoom)) + threads->d->x_pos;
-	m.y1 = (-1.2 + (1.2 - threads->d->zoom)) + threads->d->y_pos;
 	m.x2 = (0.6 - (0.6 - threads->d->zoom)) + threads->d->x_pos;
+	m.y1 = (-1.2 + (1.2 - threads->d->zoom)) + threads->d->y_pos;
 	m.y2 = (1.2 - (1.2 - threads->d->zoom)) + threads->d->y_pos;
 	m.zoomx = WSIZE / (m.x2 - m.x1);
 	m.zoomy = WSIZE / (m.y2 - m.y1);
@@ -27,6 +27,10 @@ void	mandel(t_threads *threads)
 	m.image_y = (m.y2 - m.y1) * m.zoomy;
 	int max = threads->d->iter;
 	int col;
+	int r;
+	int g;
+	int b;
+	double tmp;
 
 	m.y = 0;
 	while (m.y < m.image_y)
@@ -45,7 +49,7 @@ void	mandel(t_threads *threads)
 			m.i = 0;
 			while (z_r * z_r + z_i * z_i < 4 && m.i < max)
 			{
-				double tmp = z_r;
+				tmp = z_r;
 				z_r = z_r * z_r - z_i * z_i + c_r;
 				z_i = 2 * z_i * tmp + c_i;
 				m.i++;
@@ -57,21 +61,26 @@ void	mandel(t_threads *threads)
 				long double nu = log(log_zn / log(2)) / log(2);
 				long double i = m.i + 1.0 - nu;
 //				exp(-fabs(((float)(log((float)(ESCAPE)))/(+itera*(mad_el.y))))); // Orbit traps
-				int	r1 = (1 - cos(m.i)) * col;
-				int	g1 = (1 - cos(m.i - 2.0 * 3.14 / 3.0)) * col;
-				int	b1 = (1 - cos(m.i - 4.0 * 3.14 / 3.0)) * col;
-				int	r2 = (1 - cos(m.i + 1)) * col;
-				int	g2 = (1 - cos((m.i + 1) - 2.0 * 3.14 / 3.0)) * col;
-				int	b2 = (1 - cos((m.i + 1) - 4.0 * 3.14 / 3.0)) * col;
-				int	r = lerp(r1, r2, i - (long)i);
-				int	g = lerp(g1, g2, i - (long)i);
-				int	b = lerp(b1, b2, i - (long)i);
+				int	r1 = (1 - cos(floor(i))) * col;
+				int	g1 = (1 - cos(floor(i) - 2.0 * 3.14 / 3.0)) * col;
+				int	b1 = (1 - cos(floor(i) - 4.0 * 3.14 / 3.0)) * col;
+				int	r2 = (1 - cos(floor(i + 1))) * col;
+				int	g2 = (1 - cos((floor(i + 1)) - 2.0 * 3.14 / 3.0)) * col;
+				int	b2 = (1 - cos((floor(i + 1)) - 4.0 * 3.14 / 3.0)) * col;
+				r = lerp(r1, r2, i - (long)i);
+				g = lerp(g1, g2, i - (long)i);
+				b = lerp(b1, b2, i - (long)i);
 				threads->d->color = get_color(r, g, b);
 			}
 //			if (m.i < max)
 //				threads->d->color = threads->col;
 			else
-				threads->d->color = 0;
+			{
+//				r = 255 - fabs(sin(tmp)) * 255;
+//				g = 255 - fabs(cos(tmp)) * 255;
+//				b = 255 - fabs(cos(tmp)) * 255;
+				threads->d->color = threads->col;
+			}
 			put_px(threads->d, m.x, m.y);
 			m.x++;
 		}

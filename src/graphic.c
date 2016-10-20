@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 07:30:40 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/16 07:36:23 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/20 08:41:07 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ void	put_px(t_data *data, int x, int y)
 		return ;
 	pos = (x * data->bpp / 8) + (y * data->l_size);
 	data->addr[pos] = data->color;
-	data->addr[pos + 1] = (data->color >> 8);
+	data->addr[pos + 1] = data->color >> 8;
 	data->addr[pos + 2] = data->color >> 16;
 }
 
-float	lerp(float v0, float v1, float t)
+float lerp(float v0, float v1, float t)
 {
-	return ((1 - t) * v0 + t * v1);
+	//return (v0 + t * (v1 - v0)); // imprecise
+	return ((1 - t) * v0 + t * v1); // precise
 }

@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 23:36:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 00:39:02 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/20 07:21:27 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,7 @@ int		k_rel(int key, t_data *d)
 	if	((d->key & DEITER) && KP_M)
 		d->key -= DEITER;
 	if (ESC)
-	{
-		mlx_destroy_image(d->mlx, d->img);
-		mlx_destroy_window(d->mlx, d->win);
-		exit(0);
-	}
+		d->key = -1;
 	return (0);
 }
 

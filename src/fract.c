@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 00:19:45 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 00:26:19 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/20 07:29:11 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	fract(void *t)
 	if (threads->d->fractal == 0)
 		mandel(threads);
 	if (threads->d->fractal == 1)
-		julia(threads);
+		ft_putnbr(threads->d->fractal);
+//		julia(threads);
 	pthread_exit(NULL);
 }

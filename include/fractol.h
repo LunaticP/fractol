@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 00:32:40 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/20 08:46:03 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <math.h>
 # include <pthread.h>
 
-#define WSIZE 600
+#define WSIZE 1000
 #define THREAD 8.0
 
 typedef struct	s_data
@@ -39,13 +39,13 @@ typedef struct	s_data
 	long double	x_pos;
 	long double	y_pos;
 	long double	zoom;
-	pthread_t	thds[8];
 }				t_data;
 
 typedef struct	s_threads
 {
 	int			thd;
 	int			col;
+	pthread_t	thds;
 	t_data		*d;
 }				t_threads;
 
@@ -68,7 +68,7 @@ typedef struct	s_mandel
 float	lerp(float v0, float v1, float t);
 void	fract(void *t);
 void	mandel(t_threads *threads);
-void	julia(t_threads *threads);
+//void	julia(t_threads *threads);
 void	put_px(t_data *data, int x, int y);
 int		k_press(int key, t_data *d);
 int		k_rel(int key, t_data *d);
