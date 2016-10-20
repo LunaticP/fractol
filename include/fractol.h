@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 08:46:03 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/21 01:34:12 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct	s_data
 	int			bpp;
 	int			l_size;
 	int			endian;
-	int			color;
 	int			iter;
 	int			key;
 	short		fractal;
@@ -45,6 +44,7 @@ typedef struct	s_threads
 {
 	int			thd;
 	int			col;
+	int			color;
 	pthread_t	thds;
 	t_data		*d;
 }				t_threads;
@@ -68,8 +68,8 @@ typedef struct	s_mandel
 float	lerp(float v0, float v1, float t);
 void	fract(void *t);
 void	mandel(t_threads *threads);
-//void	julia(t_threads *threads);
-void	put_px(t_data *data, int x, int y);
+void	julia(t_threads *threads);
+void	put_px(t_data *data, int x, int y, int color);
 int		k_press(int key, t_data *d);
 int		k_rel(int key, t_data *d);
 void	k_apply(t_data *d);

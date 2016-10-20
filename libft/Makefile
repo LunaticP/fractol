@@ -6,7 +6,7 @@
 #    By: aviau <aviau@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/09 02:00:53 by aviau             #+#    #+#              #
-#    Updated: 2016/10/18 13:38:52 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/20 22:36:10 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,14 +31,11 @@ OBJ = $(SRC:.c=.o)
 FLAG = -Wall -Werror -Wextra
 
 all : $(NAME)
-	@printf "\e[32m[OK]\e[0m\n"
+	@printf "\e[33mLibft\t\e[32m[OK]\e[0m\n"
 
 $(NAME) : ./libft.h $(OBJ)
-	@printf "\e[33mLibft\e[0m ."
 	@ar rc $(NAME) $(OBJ)
-	@printf "."
 	@ranlib $(NAME)
-	@printf "."
 
 %.o:%.c
 	@gcc -c $< -o $@

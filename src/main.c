@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 04:10:02 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 08:48:11 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/21 01:34:03 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 void	destroy(t_threads *t)
 {
-	int kill_it;
-
-	kill_it = -1;
 	mlx_destroy_image(t[0].d->mlx, t[0].d->img);
 	mlx_destroy_window(t[0].d->mlx, t[0].d->win);
 	exit(0);
@@ -29,31 +26,23 @@ int		fractoloop(void *t)
 	int	cols[8] = {0xFF0000, 0x00FF00, 0x0000FF, 0xFF00FF, 0xFFFF00, 0x00FFFF, 0x999999, 0xFFFFFF};
 	t_threads	*threads;
 
+	i = 0;
 	threads = (t_threads *)t;
 	mlx_hook(threads[0].d->win, 2, (1L << 0), &k_press, threads[0].d);
 	mlx_hook(threads[0].d->win, 3, (1L << 1), &k_rel, threads[0].d);
 	if (threads[0].d->key == -1)
 		destroy(threads);
 	k_apply(threads[0].d);
-	pthread_attr_t attr;
-	pthread_attr_init(&attr);
-	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-	i = 0;
 	while (i < THREAD)
 	{
 		threads[i].col = cols[i];
 		threads[i].thd = i;
-		pthread_create(&threads[i].thds, &attr, (void *)&fract, (void *)&threads[i]);
+		pthread_create(&threads[i].thds, NULL, (void *)&fract, (void *)&threads[i]);
 		i++;
 	}
-	pthread_attr_destroy(&attr);
-	i = 0;
-	while (i < THREAD)
-	{
+	i = -1;
+	while (++i < THREAD)
 		pthread_join(threads[i].thds, NULL);
-		i++;
-	}
-	i = 0;
 	mlx_put_image_to_window(threads[0].d->mlx, threads[0].d->win, threads[0].d->img, 0, 0);
 	return (0);
 }
@@ -75,8 +64,8 @@ int		main()
 	data.y_pos = 0;
 	data.fractal = 0;
 	data.key = 0;
-	while (i < THREAD)
-		threads[++i].d = &data;
+	while (++i < THREAD)
+		threads[i].d = &data;
 	mlx_loop_hook(data.mlx, &fractoloop, &threads);
 	mlx_loop(data.mlx);
 	pthread_exit(NULL);

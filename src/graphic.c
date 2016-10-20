@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 07:30:40 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 08:41:07 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/21 01:32:16 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int		get_color(int r, int g, int b)
 	return (color);
 }
 
-void	put_px(t_data *data, int x, int y)
+void	put_px(t_data *data, int x, int y, int color)
 {
 	int	pos;
 
 	if (x <= 0 || x >= WSIZE || y <= 0 || y >= WSIZE)
 		return ;
 	pos = (x * data->bpp / 8) + (y * data->l_size);
-	data->addr[pos] = data->color;
-	data->addr[pos + 1] = data->color >> 8;
-	data->addr[pos + 2] = data->color >> 16;
+	data->addr[pos] = color;
+	data->addr[pos + 1] = color >> 8;
+	data->addr[pos + 2] = color >> 16;
 }
 
 float lerp(float v0, float v1, float t)

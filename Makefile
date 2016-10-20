@@ -6,7 +6,7 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/20 07:28:28 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/20 22:36:23 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME=fractol
 SRC_NAME =	main.c\
 			fract.c\
 			mandel.c\
+			julia.c\
 			graphic.c\
 			key.c
 
@@ -27,7 +28,7 @@ INC=-I./include -I./libft -I ./libmlx
 ARG=-L./libft -lft -lmlx -lpthread -framework OpenGl -framework AppKit
 CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
-	@printf "\e[33m$(NAME)\e[32m [OK]\n"
+	@printf "\e[33m$(NAME)\t\e[32m[OK]\n"
 
 $(NAME): lib $(OBJ)
 	@gcc $(CFLAGS) $(ARG) $(INC) $(OBJ) -o $@

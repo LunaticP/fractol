@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:53:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 08:49:38 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/21 01:33:03 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	mandel(t_threads *threads)
 	int r;
 	int g;
 	int b;
-	double tmp;
+	long double tmp;
 
 	m.y = 0;
 	while (m.y < m.image_y)
@@ -39,13 +39,13 @@ void	mandel(t_threads *threads)
 		while (m.x < m.image_x / THREAD * (threads->thd + 1.0))
 		{
 			col = 0;
-			double c_r = m.x / m.zoomx + m.x1;
-			double c_i = m.y / m.zoomy + m.y1;
+			long double c_r = m.x / m.zoomx + m.x1;
+			long double c_i = m.y / m.zoomy + m.y1;
 //			c=-0.8+0.156i
 //			double c_r = 0.8;
 //			double c_i = 0.156;
-			double z_r = 0;
-			double z_i = 0;
+			long double z_r = 0;
+			long double z_i = 0;
 			m.i = 0;
 			while (z_r * z_r + z_i * z_i < 4 && m.i < max)
 			{
@@ -53,7 +53,7 @@ void	mandel(t_threads *threads)
 				z_r = z_r * z_r - z_i * z_i + c_r;
 				z_i = 2 * z_i * tmp + c_i;
 				m.i++;
-				col += exp(-fabs(log(max / (double)m.i) + ((double)m.i * (z_i * z_r)))) * 255;
+				col += exp(-fabsl(log(max / (double)m.i) + ((double)m.i * (z_i * z_r)))) * 255;
 			}
 			if (m.i < max)
 			{
@@ -70,7 +70,7 @@ void	mandel(t_threads *threads)
 				r = lerp(r1, r2, i - (long)i);
 				g = lerp(g1, g2, i - (long)i);
 				b = lerp(b1, b2, i - (long)i);
-				threads->d->color = get_color(r, g, b);
+				threads->color = get_color(r, g, b);
 			}
 //			if (m.i < max)
 //				threads->d->color = threads->col;
@@ -79,12 +79,11 @@ void	mandel(t_threads *threads)
 //				r = 255 - fabs(sin(tmp)) * 255;
 //				g = 255 - fabs(cos(tmp)) * 255;
 //				b = 255 - fabs(cos(tmp)) * 255;
-				threads->d->color = threads->col;
+				threads->color = 0;
 			}
-			put_px(threads->d, m.x, m.y);
+			put_px(threads->d, m.x, m.y, threads->color);
 			m.x++;
 		}
 		m.y++;
 	}
-	pthread_exit(NULL);
 }

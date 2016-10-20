@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 06:49:42 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 04:00:22 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/21 01:50:33 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ void	julia(t_threads *threads)
 	m.image_x = m.image_x_init;
 	m.image_y = (m.y2 - m.y1) * m.zoomy;
 	int max = threads->d->iter;
-//	int colr[16] = {247, 25};
-//	int colg[16] = {199, 8};
-//	int colb[16] = {102, 26};
 
 	int colr[16] = {25, 15, 9, 5, 2, 16, 29, 61, 136, 212, 241, 247, 252, 201, 126, 65};
 	int colg[16] = {8, 6, 3, 7, 13, 48, 85, 127, 182, 235, 231, 199, 168, 126, 67, 30};
@@ -40,7 +37,7 @@ void	julia(t_threads *threads)
 	m.y = 0;
 	while (m.y < m.image_y)
 	{
-		m.x = m.image_x_init / THREAD * threads->thd;
+		m.x = (int)m.image_x_init / (int)THREAD * (int)threads->thd;
 		while (m.x < m.image_x / THREAD * (threads->thd + 1.0))
 		{
 			double z_r = -1.5 * (m.x - WSIZE / 2) / (0.5 * threads->d->zoom * WSIZE) + threads->d->x_pos;
@@ -59,17 +56,16 @@ void	julia(t_threads *threads)
 				long double log_zn = log(z_r * z_r + z_i * z_i) / 2.0;
 				long double nu = log(log_zn / log(2)) / log(2);
 				long double i = m.i + 1.0 - nu;
-				int	r = lerp(colr[(int)floor(i) % 16], colr[(int)floor(i + 1) % 16], i - (long)i);
-				int	g = lerp(colg[(int)floor(i) % 16], colg[(int)floor(i + 1) % 16], i - (long)i);
-				int	b = lerp(colb[(int)floor(i) % 16], colb[(int)floor(i + 1) % 16], i - (long)i);
-				threads->d->color = get_color(r, g, b);
+				int	r = lerp(colr[(int)i % 16], colr[(int)(i + 8) % 16], i - (long)i);
+				int	g = lerp(colg[(int)i % 16], colg[(int)(i + 8) % 16], i - (long)i);
+				int	b = lerp(colb[(int)i % 16], colb[(int)(i + 8) % 16], i - (long)i);
+				threads->color = get_color(r, g, b);
 			}
 			else
-				threads->d->color = 0;
-			put_px(threads->d, m.x, m.y);
+				threads->color = 0;
+			put_px(threads->d, m.x, m.y, threads->color);
 			m.x++;
 		}
 		m.y++;
 	}
-	pthread_exit(NULL);
 }
