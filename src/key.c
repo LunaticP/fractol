@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 23:36:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/21 00:20:28 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/21 04:23:00 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		k_press(int key, t_data *d)
 	if	(!(d->key & DEITER) && KP_M)
 		d->key += DEITER;
 	if (SPACE)
-		d->fractal = (d->fractal < 1) ? d->fractal + 1: 0;
+		d->fractal = (d->fractal < 3) ? d->fractal + 1: 0;
 	return (0);
 }
 

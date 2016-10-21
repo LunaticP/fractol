@@ -6,7 +6,7 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/20 22:36:23 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/21 04:22:32 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ SRC_NAME =	main.c\
 			fract.c\
 			mandel.c\
 			julia.c\
+			bship.c\
 			graphic.c\
+			spiral.c\
 			key.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
