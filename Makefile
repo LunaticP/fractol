@@ -6,7 +6,7 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/21 04:22:32 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/22 12:27:32 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ SRC_NAME =	main.c\
 			julia.c\
 			bship.c\
 			graphic.c\
-			spiral.c\
-			key.c
+			bsjulia.c\
+			key.c\
+			color.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC_PATH = ./src/
@@ -28,7 +29,7 @@ SRC=$(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ=$(addprefix $(OBJ_PATH),$(OBJ_NAME))
 INC=-I./include -I./libft -I ./libmlx
 ARG=-L./libft -lft -lmlx -lpthread -framework OpenGl -framework AppKit
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -O2 -O3
 all: $(NAME)
 	@printf "\e[33m$(NAME)\t\e[32m[OK]\n"
 

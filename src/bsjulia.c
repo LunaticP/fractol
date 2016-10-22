@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 06:49:42 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/22 12:19:19 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/22 12:26:51 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ static void		f_calc(t_fract *m)
 
 	tmp = m->z_r;
 	m->z_r = m->z_r * m->z_r - m->z_i * m->z_i + m->c_r;
-	m->z_i = 2 * m->z_i * tmp + m->c_i;
+	m->z_i = 2 * fabsl(m->z_i * tmp) + m->c_i;
 	m->i++;
 }
 
-void			julia(t_threads *t)
+void			bsjulia(t_threads *t)
 {
 	static int	cr[16] = {25, 15, 9, 5, 2, 16, 29, 61, 136, 212, 241, 247, 252, 201, 126, 65};
 	static int	cg[16] = {8, 6, 3, 7, 13, 48, 85, 127, 182, 235, 231, 199, 168, 126, 67, 30};

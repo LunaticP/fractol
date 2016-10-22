@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/01 08:22:24 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/20 07:21:46 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/22 11:25:40 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 # define DEZOOM	0x0020
 # define ITER	0x0040
 # define DEITER	0x0080
+# define SP		0x0100
 //# define NONE	0x0100
 //# define NONE	0x0200
 //# define NONE	0x0400
