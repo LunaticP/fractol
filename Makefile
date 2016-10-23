@@ -6,7 +6,7 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/22 12:27:32 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/23 15:39:10 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC_NAME =	main.c\
 			bship.c\
 			graphic.c\
 			bsjulia.c\
+			mobius.c\
 			key.c\
 			color.c
 

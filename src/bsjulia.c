@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 06:49:42 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/22 12:26:51 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/23 13:55:45 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static t_fract	m_init(t_threads *t)
 	m.image_y = (m.y2 - m.y1) * m.zoomy;
 	m.max = t->d->iter;
 	m.y = 0;
-	m.c_r = (float)t->d->x_m * 2 / WSIZE - 1;
-	m.c_i = (float)t->d->y_m * 2 / WSIZE - 1;
+	m.c.r = (float)t->d->x_m * 2 / WSIZE - 1;
+	m.c.i = (float)t->d->y_m * 2 / WSIZE - 1;
 	return (m);
 }
 
@@ -37,9 +37,9 @@ static void		f_calc(t_fract *m)
 {
 	long double	tmp;
 
-	tmp = m->z_r;
-	m->z_r = m->z_r * m->z_r - m->z_i * m->z_i + m->c_r;
-	m->z_i = 2 * fabsl(m->z_i * tmp) + m->c_i;
+	tmp = m->z.r;
+	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i + m->c.r;
+	m->z.i = 2 * fabsl(m->z.i * tmp) + m->c.i;
 	m->i++;
 }
 
@@ -58,14 +58,14 @@ void			bsjulia(t_threads *t)
 		m.x = (int)m.image_x_init / (int)THREAD * (int)t->thd;
 		while (m.x < m.image_x / THREAD * (t->thd + 1.0))
 		{
-			m.z_r = -1.5 * (m.x - WSIZE / 2) / (0.5 * t->d->zoom * WSIZE) - t->d->x_pos;
-			m.z_i = (m.y - WSIZE / 2) / (0.5 * t->d->zoom * WSIZE) + t->d->y_pos;
+			m.z.r = -1.5 * (m.x - WSIZE / 2) / (0.5 * t->d->zoom * WSIZE) - t->d->x_pos;
+			m.z.i = (m.y - WSIZE / 2) / (0.5 * t->d->zoom * WSIZE) + t->d->y_pos;
 			m.i = 0;
-			while (m.z_r * m.z_r + m.z_i * m.z_i < 4 && m.i < m.max)
+			while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
 				f_calc(&m);
 			if (m.i < m.max)
 			{
-				l.log_zn = log(m.z_r * m.z_r + m.z_i * m.z_i) / 2.0;
+				l.log_zn = log(m.z.r * m.z.r + m.z.i * m.z.i) / 2.0;
 				l.nu = log(l.log_zn / log(2)) / log(2);
 				l.i = m.i + 1.0 - l.nu;
 				c.r = lerp(cr[(int)l.i % 16], cr[(int)(l.i + 1) % 16], l.i - (long)l.i);

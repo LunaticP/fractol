@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 11:41:43 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/22 11:56:15 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/23 13:57:03 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	color(t_fract f, t_threads *t)
 	t_lerp		l;
 	int			color;
 
-	l.log_zn = log(f.z_r * f.z_r + f.z_i * f.z_i) / 2.0;
+	l.log_zn = log(f.z.r * f.z.r + f.z.i * f.z.i) / 2.0;
 	l.nu = log(l.log_zn / log(2)) / log(2);
 	l.i = f.i + 1.0 - l.nu;
 	l.r1 = (1 - cos(floor(l.i))) * t->color;

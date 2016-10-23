@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:53:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/22 12:25:28 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/23 13:55:37 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static void		f_calc(t_fract *m)
 {
 	long double	tmp;
 
-	tmp = m->z_r;
-	m->z_r = m->z_r * m->z_r - m->z_i * m->z_i + m->c_r;
-	m->z_i = 2 * fabsl(m->z_i * tmp) + m->c_i;
+	tmp = m->z.r;
+	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i + m->c.r;
+	m->z.i = 2 * fabsl(m->z.i * tmp) + m->c.i;
 	m->i++;
 }
 
@@ -56,16 +56,16 @@ void			bship(t_threads *t)
 		while (m.x < m.image_x / THREAD * (t->thd + 1.0))
 		{
 			t->color = 0;
-			m.c_r = m.x / m.zoomx + m.x1;
-			m.c_i = m.y / m.zoomy + m.y1;
-			m.z_r = 0;
-			m.z_i = 0;
+			m.c.r = m.x / m.zoomx + m.x1;
+			m.c.i = m.y / m.zoomy + m.y1;
+			m.z.r = 0;
+			m.z.i = 0;
 			m.i = 0;
-			while (m.z_r * m.z_r + m.z_i * m.z_i < 4 && m.i < m.max)
+			while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
 				f_calc(&m);
 			if (m.i < m.max)
 			{
-				l.log_zn = log(m.z_r * m.z_r + m.z_i * m.z_i) / 2.0;
+				l.log_zn = log(m.z.r * m.z.r + m.z.i * m.z.i) / 2.0;
 				l.nu = log(l.log_zn / log(2)) / log(2);
 				l.i = (long double)m.i + 1.0 - l.nu;
 				c.r = lerp(colr[(int)l.i % 16], colr[(int)(l.i + 1) % 16], l.i - (long)l.i);

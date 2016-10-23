@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:53:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/23 16:41:10 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/23 17:35:38 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_fract	m_init(t_threads *t)
 	t_fract	m;
 
 	m.x1 = (-2.1 + (2.1 - t->d->zoom)) + t->d->x_pos;
-	m.x2 = (1 - (1 - t->d->zoom)) + t->d->x_pos;
+	m.x2 = (1.2 - (1.2 - t->d->zoom)) + t->d->x_pos;
 	m.y1 = (-1.2 + (1.2 - t->d->zoom)) + t->d->y_pos;
 	m.y2 = (1.2 - (1.2 - t->d->zoom)) + t->d->y_pos;
 	m.zoomx = WSIZE / (m.x2 - m.x1);
@@ -30,21 +30,30 @@ static t_fract	m_init(t_threads *t)
 	return (m);
 }
 
-static void		f_calc(t_fract *m, int *col)
+static void		f_calc(t_fract *m)
 {
-	long double	tmp;
-
-	tmp = m->z.r;
-	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i + m->c.r;
-	m->z.i = 2 * m->z.i * tmp + m->c.i;
+	m->z.r = m->z.r + 1 + m->c.r;
+	m->z.i = m->c.r;
 	m->i++;
-	*col += exp(-fabsl(log(m->max / (double)m->i) +
-				((double)m->i * (m->z.i * m->z.r)))) * 255;
 }
 
-void			mandel(t_threads *t)
+void			mobius(t_threads *t)
 {
 	t_fract		m;
+	t_color		c;
+//	t_comp a;
+//	t_comp b;
+//	t_comp c;
+//	t_comp d;
+//
+//	a.r = 1;
+//	a.i = 0;
+//	b.r = 1;
+//	b.i = 0;
+//	c.r = 0;
+//	c.i = 0;
+//	d.r = 1;
+//	d.i = 0;
 
 	m = m_init(t);
 	while (m.y < m.image_y)
@@ -55,13 +64,27 @@ void			mandel(t_threads *t)
 			t->color = 0;
 			m.c.r = m.x / m.zoomx + m.x1;
 			m.c.i = m.y / m.zoomy + m.y1;
-			m.z.r = 0;
-			m.z.i = 0;
+			m.z.r = 1;
+			m.z.i = 1;
 			m.i = 0;
-			while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
-				f_calc(&m, &(t->color));
+			if (t->thd == 2)
+			{
+				ft_putnbr(m.z.r);
+				ft_putchar(',');
+				ft_putnbr(m.z.i);
+				ft_putchar('\n');
+			}
+			while (m.z.r + 1 + m.z.i < 10 && m.i < m.max)
+				f_calc(&m);
 			if (m.i < m.max)
-				t->color = color(m, t);
+			{
+				if (t->thd == 2)
+					ft_putchar('!');
+				c.r = 255;
+				c.g = 255;
+				c.b = 255;
+				t->color = get_color(c.r, c.g, c.b);
+			}
 			else
 				t->color = 0;
 			put_px(t->d, m.x, m.y, t->color);
@@ -70,7 +93,3 @@ void			mandel(t_threads *t)
 		m.y++;
 	}
 }
-
-//				r = 255 - fabs(sin(tmp)) * 255;
-//				g = 255 - fabs(cos(tmp)) * 255;
-//				b = 255 - fabs(cos(tmp)) * 255;
