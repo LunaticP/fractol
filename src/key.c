@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 23:36:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/23 15:38:30 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/25 08:38:47 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		k_press(int key, t_data *d)
 	if (!(d->key & SP) && SPACE)
 	{
 		d->key += SP;
-		d->fractal = (d->fractal < 4) ? d->fractal + 1 : 0;
+		d->fractal = (d->fractal < 8) ? d->fractal + 1 : 0;
 	}
 	return (0);
 }
@@ -74,9 +74,9 @@ void	k_apply(t_data *d)
 	if (d->key & UP)
 		d->y_pos += d->zoom / 25;
 	if (d->key & ZOOM)
-		d->zoom = (d->fractal != 2) ? d->zoom / 1.03 : d->zoom * 1.03;
+		d->zoom = d->zoom / 1.03;
 	if (d->key & DEZOOM)
-		d->zoom = (d->fractal != 2) ? d->zoom * 1.03 : d->zoom * 1.03;
+		d->zoom = d->zoom * 1.03;
 	if (d->key & ITER)
 		d->iter++;
 	if (d->key & DEITER && d->iter > 0)

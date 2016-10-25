@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 06:49:42 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/23 13:55:57 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/25 08:25:27 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static t_fract	m_init(t_threads *t)
 {
 	t_fract	m;
 
-	m.x1 = (-2.1 + (2.1 - t->d->zoom)) + t->d->x_pos;
-	m.y1 = (-1.2 + (1.2 - t->d->zoom)) + t->d->y_pos;
-	m.x2 = (0.6 - (0.6 - t->d->zoom)) + t->d->x_pos;
-	m.y2 = (1.2 - (1.2 - t->d->zoom)) + t->d->y_pos;
+	m.x1 = -2.1;
+	m.y1 = -1.2;
+	m.x2 = 0.6;
+	m.y2 = 1.2;
 	m.zoomx = WSIZE / (m.x2 - m.x1);
 	m.zoomy = WSIZE / (m.x2 - m.x1);
 	m.image_x_init = (m.x2 - m.x1) * m.zoomx;
@@ -28,14 +28,14 @@ static t_fract	m_init(t_threads *t)
 	m.image_y = (m.y2 - m.y1) * m.zoomy;
 	m.max = t->d->iter;
 	m.y = 0;
-	m.c.r = (float)t->d->x_m * 2 / WSIZE - 1;
-	m.c.i = (float)t->d->y_m * 2 / WSIZE - 1;
+	m.c.r = (double)t->d->x_m * 2 / WSIZE - 1;
+	m.c.i = (double)t->d->y_m * 2 / WSIZE - 1;
 	return (m);
 }
 
 static void		f_calc(t_fract *m)
 {
-	long double	tmp;
+	double	tmp;
 
 	tmp = m->z.r;
 	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i + m->c.r;
@@ -58,8 +58,8 @@ void			julia(t_threads *t)
 		m.x = (int)m.image_x_init / (int)THREAD * (int)t->thd;
 		while (m.x < m.image_x / THREAD * (t->thd + 1.0))
 		{
-			m.z.r = -1.5 * (m.x - WSIZE / 2) / (0.5 * t->d->zoom * WSIZE) - t->d->x_pos;
-			m.z.i = (m.y - WSIZE / 2) / (0.5 * t->d->zoom * WSIZE) + t->d->y_pos;
+			m.z.r = -1.5 * (m.x - WSIZE / 2) / (1 / t->d->zoom * WSIZE) - t->d->x_pos;
+			m.z.i = (m.y - WSIZE / 2) / (1 / t->d->zoom * WSIZE) + t->d->y_pos;
 			m.i = 0;
 			while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
 				f_calc(&m);

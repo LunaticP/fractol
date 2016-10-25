@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:53:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 09:26:09 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/25 08:35:10 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static t_fract	m_init(t_threads *t)
 	m.x2 = (1 - (1 - t->d->zoom)) + t->d->x_pos;
 	m.y1 = (-1.2 + (1.2 - t->d->zoom)) + t->d->y_pos;
 	m.y2 = (1.2 - (1.2 - t->d->zoom)) + t->d->y_pos;
-	m.zz1 = (-2.1 + (2.1 - t->d->zoom)) + t->d->x_pos;
-	m.zz2 = (1 - (1 - t->d->zoom)) + t->d->x_pos;
 	m.zoomx = WSIZE / (m.x2 - m.x1);
 	m.zoomy = WSIZE / (m.y2 - m.y1);
 	m.image_x = (m.x2 - m.x1) * m.zoomx;
@@ -37,21 +35,16 @@ static void		f_calc(t_fract *m, int *col)
 	double	tmp;
 
 	tmp = m->z.r;
-	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i - m->z.h * m->z.h + m->c.r;
-	m->z.i = 2 * tmp * m->z.h + m->c.i;
-	m->z.h = 2 * tmp * m->z.i + m->c.h;
+	m->z.r = fabs(m->z.r * m->z.r - m->z.i * m->z.i) + m->c.r;
+	m->z.i = 2 * tmp * m->z.i + m->c.i;
 	m->i++;
 	*col += exp(-fabs(log(m->max / (double)m->i) +
 				((double)m->i * (m->z.i * m->z.r)))) * 255;
 }
 
-void			mobius(t_threads *t)
+void			celtic(t_threads *t)
 {
 	t_fract		m;
-	t_color		c;
-	int		colr[7] = {0xFF, 0xFF,  0xFF, 0x00, 0x00, 0x00, 0xFF};
-	int		colg[7] = {0x00, 0xAA,  0xFF, 0xFF, 0xFF, 0x00, 0x00};
-	int		colb[7] = {0x00, 0x00,  0x00, 0x00, 0xFF, 0xFF, 0xFF};
 
 	m = m_init(t);
 	while (m.y < m.image_y)
@@ -62,20 +55,13 @@ void			mobius(t_threads *t)
 			t->color = 0;
 			m.c.r = m.x / m.zoomx + m.x1;
 			m.c.i = m.y / m.zoomy + m.y1;
-			m.c.h = m.zz / m.zoomx + m.zz1;
 			m.z.r = 0;
 			m.z.i = 0;
-			m.z.h = 0;
 			m.i = 0;
-			while (m.z.r * m.z.r + m.z.i * m.z.i + m.z.h * m.z.h < 8 && m.i < m.max)
+			while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
 				f_calc(&m, &(t->color));
 			if (m.i < m.max)
-			{
-				c.r = colr[m.i % 7] - m.z.h;
-				c.g = colg[m.i % 7] - m.z.h;
-				c.b = colb[m.i % 7] - m.z.h;
-				t->color = get_color(c.r, c.g, c.b);
-			}
+				t->color = color(m, t);
 			else
 				t->color = 0;
 			put_px(t->d, m.x, m.y, t->color);

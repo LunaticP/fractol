@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:53:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/23 13:55:37 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/25 06:35:48 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ static t_fract	m_init(t_threads *t)
 
 static void		f_calc(t_fract *m)
 {
-	long double	tmp;
+	double	tmp;
 
 	tmp = m->z.r;
 	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i + m->c.r;
-	m->z.i = 2 * fabsl(m->z.i * tmp) + m->c.i;
+	m->z.i = 2 * fabs(m->z.i * tmp) + m->c.i;
 	m->i++;
 }
 
@@ -46,7 +46,7 @@ void			bship(t_threads *t)
 	static int	colg[16] = {8, 6, 3, 7, 13, 48, 85, 127, 182, 235, 231, 199, 168, 126, 67, 30};
 	static int	colb[16] = {26, 43, 46, 71, 97, 136, 174, 206, 227, 246, 192, 102, 40, 29, 14, 17};
 	t_fract		m;
-	t_lerp		l;
+//	t_lerp		l;
 	t_color		c;
 
 	m = m_init(t);
@@ -65,12 +65,15 @@ void			bship(t_threads *t)
 				f_calc(&m);
 			if (m.i < m.max)
 			{
-				l.log_zn = log(m.z.r * m.z.r + m.z.i * m.z.i) / 2.0;
-				l.nu = log(l.log_zn / log(2)) / log(2);
-				l.i = (long double)m.i + 1.0 - l.nu;
-				c.r = lerp(colr[(int)l.i % 16], colr[(int)(l.i + 1) % 16], l.i - (long)l.i);
-				c.g = lerp(colg[(int)l.i % 16], colg[(int)(l.i + 1) % 16], l.i - (long)l.i);
-				c.b = lerp(colb[(int)l.i % 16], colb[(int)(l.i + 1) % 16], l.i - (long)l.i);
+//				l.log_zn = log(m.z.r * m.z.r + m.z.i * m.z.i) / 2.0;
+//				l.nu = log(l.log_zn / log(2)) / log(2);
+//				l.i = (double)m.i + 1.0 - l.nu;
+//				c.r = lerp(colr[(int)l.i % 16], colr[(int)(l.i + 1) % 16], l.i - (long)l.i);
+//				c.g = lerp(colg[(int)l.i % 16], colg[(int)(l.i + 1) % 16], l.i - (long)l.i);
+//				c.b = lerp(colb[(int)l.i % 16], colb[(int)(l.i + 1) % 16], l.i - (long)l.i);
+				c.r = colr[m.i % 16];
+				c.g = colg[m.i % 16];
+				c.b = colb[m.i % 16];
 				t->color = get_color(c.r, c.g, c.b);
 			}
 			else

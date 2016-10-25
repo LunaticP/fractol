@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/23 13:54:34 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/25 09:03:21 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ typedef struct	s_data
 	int			x_m;
 	int			y_m;
 	short		fractal;
-	long double	x_pos;
-	long double	y_pos;
-	long double	zoom;
+	double		x_pos;
+	double		y_pos;
+	double		zoom;
 }				t_data;
 
 typedef struct	s_threads
@@ -53,25 +53,31 @@ typedef struct	s_threads
 
 typedef struct	s_comp
 {
-	long double	r;
-	long double	i;
+	double		r;
+	double		i;
+	double		h;
 }				t_comp;
 
 typedef struct	s_fract
 {
-	long double	x1;
-	long double	x2;
-	long double	y1;
-	long double	y2;
-	long double	zoomx;
-	long double	zoomy;
-	long double	image_x_init;
-	long double	image_x;
-	long double	image_y;
+	double		x1;
+	double		x2;
+	double		y1;
+	double		y2;
+	double		zz1;
+	double		zz2;
+	double		zoomx;
+	double		zoomy;
+	double		zoomzz;
+	double		image_x_init;
+	double		image_x;
+	double		image_y;
+	double		image_zz;
 	t_comp		c;
 	t_comp		z;
 	int			x;
 	int			y;
+	int			zz;
 	int			i;
 	int			max;
 }				t_fract;
@@ -85,15 +91,15 @@ typedef struct	s_color
 
 typedef struct	s_lerp
 {
-	float		r1;
-	float		g1;
-	float		b1;
-	float		r2;
-	float		g2;
-	float		b2;
-	float		i;
-	long double	log_zn;
-	long double	nu;
+	double		r1;
+	double		g1;
+	double		b1;
+	double		r2;
+	double		g2;
+	double		b2;
+	double		i;
+	double		log_zn;
+	double		nu;
 }				t_lerp;
 
 float	lerp(float v0, float v1, float t);
@@ -103,6 +109,10 @@ void	mandel(t_threads *threads);
 void	julia(t_threads *threads);
 void	bship(t_threads *threads);
 void	bsjulia(t_threads *threads);
+void	heart(t_threads *threads);
+void	tricorn(t_threads *threads);
+void	celtic(t_threads *threads);
+void	csjulia(t_threads *threads);
 void	mobius(t_threads *threads);
 void	put_px(t_data *data, int x, int y, int color);
 int		k_press(int key, t_data *d);

@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 01:53:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/23 16:41:10 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/25 08:53:13 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static t_fract	m_init(t_threads *t)
 
 static void		f_calc(t_fract *m, int *col)
 {
-	long double	tmp;
+	double	tmp;
 
 	tmp = m->z.r;
 	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i + m->c.r;
 	m->z.i = 2 * m->z.i * tmp + m->c.i;
 	m->i++;
-	*col += exp(-fabsl(log(m->max / (double)m->i) +
+	*col += exp(-fabs(log(m->max / (double)m->i) +
 				((double)m->i * (m->z.i * m->z.r)))) * 255;
 }
 
@@ -61,9 +61,9 @@ void			mandel(t_threads *t)
 			while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
 				f_calc(&m, &(t->color));
 			if (m.i < m.max)
-				t->color = color(m, t);
+				t->color = (m.z.r * m.z.r + m.z.i * m.z.i < 1000) ? sqrt(m.z.r * m.z.r + m.z.i * m.z.i): 255;
 			else
-				t->color = 0;
+				t->color = color(m, t);
 			put_px(t->d, m.x, m.y, t->color);
 			m.x++;
 		}
