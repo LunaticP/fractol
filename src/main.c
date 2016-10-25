@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 04:10:02 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/22 12:01:40 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/25 16:52:23 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ int		fractoloop(void *threads)
 
 	i = -1;
 	t = (t_threads *)threads;
-	mlx_hook(t[0].d->win, 2, (1L << 0), &k_press, t[0].d);
-	mlx_hook(t[0].d->win, 3, (1L << 1), &k_rel, t[0].d);
-	mlx_hook(t[0].d->win, 6, (1L << 13), &mouse, t[0].d);
 	if (t[0].d->key == -1)
 		destroy(t);
 	if (!t[0].d->key)
@@ -46,6 +43,8 @@ int		fractoloop(void *threads)
 	while (++i < THREAD)
 		pthread_join(t[i].thds, NULL);
 	mlx_put_image_to_window(t[0].d->mlx, t[0].d->win, t[0].d->img, 0, 0);
+	if (t[0].d->key & SP)
+		t[0].d->key -= SP;
 	return (0);
 }
 
@@ -68,6 +67,11 @@ int		main(void)
 	d.key = 0;
 	while (++i < THREAD)
 		threads[i].d = &d;
+	mlx_hook(d.win, 2, (1L << 0), &k_press, &d);
+	mlx_hook(d.win, 3, (1L << 1), &k_rel, &d);
+	mlx_hook(d.win, 4, (1L << 2), &mp_button, &d);
+	mlx_hook(d.win, 5, (1L << 3), &mr_button, &d);
+	mlx_hook(d.win, 6, (1L << 13), &mouse, &d);
 	mlx_loop_hook(d.mlx, &fractoloop, &threads);
 	mlx_loop(d.mlx);
 	pthread_exit(NULL);

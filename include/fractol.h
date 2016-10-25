@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 09:03:21 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/25 16:47:12 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ typedef struct	s_fract
 	double		image_zz;
 	t_comp		c;
 	t_comp		z;
+	t_comp		a;
+	t_comp		b;
 	int			x;
 	int			y;
 	int			zz;
@@ -118,6 +120,8 @@ void	put_px(t_data *data, int x, int y, int color);
 int		k_press(int key, t_data *d);
 int		k_rel(int key, t_data *d);
 int		mouse(int x, int y, t_data *d);
+int		mp_button(int button, int x, int y, t_data *d);
+int		mr_button(int button, int x, int y, t_data *d);
 void	k_apply(t_data *d);
 int		get_color(int r, int g, int b);
 

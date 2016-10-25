@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 23:36:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 08:38:47 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/25 17:15:38 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ int		k_rel(int key, t_data *d)
 		d->key -= ITER;
 	if ((d->key & DEITER) && KP_M)
 		d->key -= DEITER;
-	if ((d->key & SP) && SPACE)
-		d->key -= SP;
 	if (ESC)
 		d->key = -1;
 	return (0);
@@ -83,23 +81,64 @@ void	k_apply(t_data *d)
 		d->iter--;
 }
 
+int	mp_button(int button, int x, int y, t_data *d)
+{
+	if (!(d->key & L_CLK) && L_CLICK)
+		d->key += L_CLK;
+	if (!(d->key & M_CLK) && M_CLICK)
+		d->key += M_CLK;
+	if (!(d->key & M_CLK) && M_CLICK)
+		d->key += M_CLK;
+	if (U_SCROL)
+		d->zoom = d->zoom / 1.1;
+	if (D_SCROL)
+		d->zoom = d->zoom * 1.1;
+	if (!(d->key & SP))
+		d->key += SP;
+	return (0);
+}
+
+int	mr_button(int button, int x, int y, t_data *d)
+{
+	ft_putnbr(button);
+	ft_putchar('\n');
+	if ((d->key & L_CLK) && L_CLICK)
+		d->key -= L_CLK;
+	if ((d->key & M_CLK) && M_CLICK)
+		d->key -= M_CLK;
+	if ((d->key & M_CLK) && M_CLICK)
+		d->key -= M_CLK;
+	if (!(d->key & SP))
+		d->key += SP;
+	return (0);
+}
+
+void	move_clk(int x, int y, t_data *d)
+{
+		if (x > d->x_m)
+			d->x_pos -= d->zoom / 300 * (x - d->x_m);
+		if (x < d->x_m)
+			d->x_pos += d->zoom / 300 * (d->x_m - x);
+		if (y > d->y_m)
+			d->y_pos -= d->zoom / 300 * (y - d->y_m);
+		if (y < d->y_m)
+			d->y_pos += d->zoom / 300 * (d->y_m - y);
+		d->x_m = x;
+		d->y_m = y;
+}
+
 int		mouse(int x, int y, t_data *d)
 {
-	if (x > 0 && x < WSIZE && d->x_m != x)
+	if (!(d->key & L_CLK))
 	{
-		if (!(d->key & SP))
-			d->key += SP;
-		d->x_m = x;
+		if (x > 0 && x < WSIZE && d->x_m != x)
+			d->x_m = x;
+		if (y > 0 && y < WSIZE && d->y_m != y)
+			d->y_m = y;
 	}
-	else if (d->key & SP)
-		d->key -= SP;
-	if (y > 0 && y < WSIZE && d->y_m != y)
-	{
-		if (!(d->key & SP))
-			d->key += SP;
-		d->y_m = y;
-	}
-	else if (d->key & SP)
-		d->key -= SP;
+	else
+		move_clk(x, y, d);
+	if (!(d->key & SP))
+		d->key += SP;
 	return (0);
 }
