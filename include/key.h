@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/01 08:22:24 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 16:21:34 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/26 15:35:42 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # define K_R	key == 124
 # define K_D	key == 125
 # define K_U	key == 126
+# define K_J	key == 38
+# define K_M	key == 46
 # define KP_0	key == 82
 # define KP_1	key == 83
 # define KP_2	key == 84
@@ -53,6 +55,7 @@
 # define M_CLK	0x0800
 # define U_SCL	0x1000
 # define D_SCL	0x2000
+# define JMOVE	0x4000
 //# define NONE	0x4000
 //# define NONE	0x8000
 

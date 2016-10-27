@@ -6,26 +6,29 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/25 08:39:29 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/26 18:52:46 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME=fractol
+NAME="fractol"
 
 SRC_NAME =	main.c\
 			fract.c\
+			graphic.c\
+			key.c\
+			mouse.c\
+			color.c\
+			f_menu.c\
 			mandel.c\
 			julia.c\
 			bship.c\
-			graphic.c\
 			bsjulia.c\
 			heart.c\
-			tricorn.c\
+			hejulia.c\
 			celtic.c\
 			csjulia.c\
-			mobius.c\
-			key.c\
-			color.c
+			tricorn.c\
+			trjulia.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC_PATH = ./src/
@@ -35,6 +38,7 @@ OBJ=$(addprefix $(OBJ_PATH),$(OBJ_NAME))
 INC=-I./include -I./libft -I ./libmlx
 ARG=-L./libft -lft -lmlx -lpthread -framework OpenGl -framework AppKit
 CFLAGS = -Wall -Wextra -O2 -O3
+
 all: $(NAME)
 	@printf "\e[33m$(NAME)\t\e[32m[OK]\n"
 

@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 07:16:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 07:32:43 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/26 14:07:49 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static t_fract	m_init(t_threads *t)
 {
 	t_fract	m;
 
-	m.x1 = (-2.1 + (2.1 - t->d->zoom)) + t->d->x_pos;
+	m.x1 = (-1 + (1 - t->d->zoom)) + t->d->x_pos;
 	m.x2 = (1 - (1 - t->d->zoom)) + t->d->x_pos;
-	m.y1 = (-1.2 + (1.2 - t->d->zoom)) + t->d->y_pos;
-	m.y2 = (1.2 - (1.2 - t->d->zoom)) + t->d->y_pos;
+	m.y1 = (-1 + (1 - t->d->zoom)) + t->d->y_pos;
+	m.y2 = (1 - (1 - t->d->zoom)) + t->d->y_pos;
 	m.zoomx = WSIZE / (m.x2 - m.x1);
 	m.zoomy = WSIZE / (m.y2 - m.y1);
 	m.image_x = (m.x2 - m.x1) * m.zoomx;

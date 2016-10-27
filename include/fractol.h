@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 16:47:12 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/27 03:25:51 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 # include "key.h"
 # include "mlx.h"
 # include "libft.h"
-#include "key.h"
+# include "key.h"
+# include "menu.h"
 # include <math.h>
 # include <pthread.h>
 
 #define WSIZE 600
 #define THREAD 8.0
+
 
 typedef struct	s_data
 {
@@ -36,10 +38,17 @@ typedef struct	s_data
 	int			key;
 	int			x_m;
 	int			y_m;
+	int			x_j;
+	int			y_j;
+	int			x_me;
+	int			y_me;
+	int			color;
 	short		fractal;
+	short		julia;
 	double		x_pos;
 	double		y_pos;
 	double		zoom;
+	void		(**fractals)();
 }				t_data;
 
 typedef struct	s_threads
@@ -112,10 +121,11 @@ void	julia(t_threads *threads);
 void	bship(t_threads *threads);
 void	bsjulia(t_threads *threads);
 void	heart(t_threads *threads);
-void	tricorn(t_threads *threads);
+void	hejulia(t_threads *threads);
 void	celtic(t_threads *threads);
 void	csjulia(t_threads *threads);
-void	mobius(t_threads *threads);
+void	tricorn(t_threads *threads);
+void	trjulia(t_threads *threads);
 void	put_px(t_data *data, int x, int y, int color);
 int		k_press(int key, t_data *d);
 int		k_rel(int key, t_data *d);
@@ -123,6 +133,8 @@ int		mouse(int x, int y, t_data *d);
 int		mp_button(int button, int x, int y, t_data *d);
 int		mr_button(int button, int x, int y, t_data *d);
 void	k_apply(t_data *d);
+void	f_menu(t_data *d);
 int		get_color(int r, int g, int b);
+void	draw_line(t_data *data, t_draw *x);
 
 #endif

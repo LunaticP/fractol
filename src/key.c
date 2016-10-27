@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 23:36:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 17:15:38 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/26 19:31:33 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,24 @@ int		k_press(int key, t_data *d)
 		d->key += ITER;
 	if (!(d->key & DEITER) && KP_M)
 		d->key += DEITER;
+	if (!(d->key & JMOVE) && K_M)
+		d->key += JMOVE;
+	else if (((d->key & JMOVE) && K_M))
+		d->key -= JMOVE;
+	if (K_J && !d->julia)
+	{
+		d->key += SP;
+		d->julia = 1;
+	}
+	else if (K_J && d->julia)
+	{
+		d->key += SP;
+		d->julia = 0;
+	}
 	if (!(d->key & SP) && SPACE)
 	{
 		d->key += SP;
-		d->fractal = (d->fractal < 8) ? d->fractal + 1 : 0;
+		d->fractal = (d->fractal < 4) ? d->fractal + 1 : 0;
 	}
 	return (0);
 }
@@ -63,82 +77,20 @@ int		k_rel(int key, t_data *d)
 
 void	k_apply(t_data *d)
 {
-	if (d->key & LEFT)
+	if (d->key & LEFT && d->x_pos < 2)
 		d->x_pos += d->zoom / 25;
-	if (d->key & RIGHT)
+	if (d->key & RIGHT && d->x_pos > -2)
 		d->x_pos -= d->zoom / 25;
-	if (d->key & DOWN)
+	if (d->key & DOWN && d->y_pos > -2)
 		d->y_pos -= d->zoom / 25;
-	if (d->key & UP)
+	if (d->key & UP && d->y_pos < 2)
 		d->y_pos += d->zoom / 25;
 	if (d->key & ZOOM)
 		d->zoom = d->zoom / 1.03;
-	if (d->key & DEZOOM)
+	if (d->key & DEZOOM && d->zoom < 2)
 		d->zoom = d->zoom * 1.03;
 	if (d->key & ITER)
 		d->iter++;
-	if (d->key & DEITER && d->iter > 0)
+	if (d->key & DEITER && d->iter > 2)
 		d->iter--;
-}
-
-int	mp_button(int button, int x, int y, t_data *d)
-{
-	if (!(d->key & L_CLK) && L_CLICK)
-		d->key += L_CLK;
-	if (!(d->key & M_CLK) && M_CLICK)
-		d->key += M_CLK;
-	if (!(d->key & M_CLK) && M_CLICK)
-		d->key += M_CLK;
-	if (U_SCROL)
-		d->zoom = d->zoom / 1.1;
-	if (D_SCROL)
-		d->zoom = d->zoom * 1.1;
-	if (!(d->key & SP))
-		d->key += SP;
-	return (0);
-}
-
-int	mr_button(int button, int x, int y, t_data *d)
-{
-	ft_putnbr(button);
-	ft_putchar('\n');
-	if ((d->key & L_CLK) && L_CLICK)
-		d->key -= L_CLK;
-	if ((d->key & M_CLK) && M_CLICK)
-		d->key -= M_CLK;
-	if ((d->key & M_CLK) && M_CLICK)
-		d->key -= M_CLK;
-	if (!(d->key & SP))
-		d->key += SP;
-	return (0);
-}
-
-void	move_clk(int x, int y, t_data *d)
-{
-		if (x > d->x_m)
-			d->x_pos -= d->zoom / 300 * (x - d->x_m);
-		if (x < d->x_m)
-			d->x_pos += d->zoom / 300 * (d->x_m - x);
-		if (y > d->y_m)
-			d->y_pos -= d->zoom / 300 * (y - d->y_m);
-		if (y < d->y_m)
-			d->y_pos += d->zoom / 300 * (d->y_m - y);
-		d->x_m = x;
-		d->y_m = y;
-}
-
-int		mouse(int x, int y, t_data *d)
-{
-	if (!(d->key & L_CLK))
-	{
-		if (x > 0 && x < WSIZE && d->x_m != x)
-			d->x_m = x;
-		if (y > 0 && y < WSIZE && d->y_m != y)
-			d->y_m = y;
-	}
-	else
-		move_clk(x, y, d);
-	if (!(d->key & SP))
-		d->key += SP;
-	return (0);
 }

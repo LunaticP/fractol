@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 06:49:42 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/26 21:30:30 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/26 17:09:58 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static t_fract	m_init(t_threads *t)
 {
 	t_fract	m;
 
-	m.x1 = -1;
-	m.y1 = -1;
-	m.x2 = 1;
-	m.y2 = 1;
+	m.x1 = -2.1;
+	m.y1 = -1.2;
+	m.x2 = 0.6;
+	m.y2 = 1.2;
 	m.zoomx = WSIZE / (m.x2 - m.x1);
 	m.zoomy = WSIZE / (m.x2 - m.x1);
 	m.image_x_init = (m.x2 - m.x1) * m.zoomx;
@@ -38,12 +38,12 @@ static void		f_calc(t_fract *m)
 	double	tmp;
 
 	tmp = m->z.r;
-	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i + m->c.r;
-	m->z.i = 2 * m->z.i * tmp + m->c.i;
+	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i + m->c.i * 2;
+	m->z.i = 2 * m->z.i * tmp * tmp + m->c.r;
 	m->i++;
 }
 
-void			julia(t_threads *t)
+void			hejulia(t_threads *t)
 {
 	static int	cr[16] = {25, 15, 9, 5, 2, 16, 29, 61, 136, 212, 241, 247, 252, 201, 126, 65};
 	static int	cg[16] = {8, 6, 3, 7, 13, 48, 85, 127, 182, 235, 231, 199, 168, 126, 67, 30};

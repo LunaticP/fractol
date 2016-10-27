@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 04:10:02 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 16:52:23 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/27 03:21:59 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int		fractoloop(void *threads)
 	while (++i < THREAD)
 		pthread_join(t[i].thds, NULL);
 	mlx_put_image_to_window(t[0].d->mlx, t[0].d->win, t[0].d->img, 0, 0);
+	if (t[0].d->key & R_CLK)
+		f_menu(t[0].d);
 	if (t[0].d->key & SP)
 		t[0].d->key -= SP;
 	return (0);
@@ -59,12 +61,18 @@ int		main(void)
 	d.win = mlx_new_window(d.mlx, WSIZE, WSIZE, "fractol");
 	d.img = mlx_new_image(d.mlx, WSIZE, WSIZE);
 	d.addr = mlx_get_data_addr(d.img, &d.bpp, &d.l_size, &d.endian);
-	d.iter = 3;
-	d.zoom = 1.3;
-	d.x_pos = -0.75;
+	d.iter = 30;
+	d.zoom = 2;
+	d.x_pos = 0;
 	d.y_pos = 0;
 	d.fractal = 0;
-	d.key = 0;
+	d.fractals = (void (**)())ft_memalloc(sizeof(void (*)()) * 5);
+	d.fractals[0] = &mandel;
+	d.fractals[1] = &bship;
+	d.fractals[2] = &celtic;
+	d.fractals[3] = &heart;
+	d.fractals[4] = &tricorn;
+	d.key = SP;
 	while (++i < THREAD)
 		threads[i].d = &d;
 	mlx_hook(d.win, 2, (1L << 0), &k_press, &d);

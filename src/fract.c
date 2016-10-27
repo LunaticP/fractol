@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 00:19:45 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 08:39:14 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/27 03:21:55 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,25 @@ void	fract(void *t)
 	t_threads *threads;
 
 	threads = (t_threads *)t;
-	if (threads->d->fractal == 8)
-		csjulia(threads);
-	if (threads->d->fractal == 7)
-		celtic(threads);
-	if (threads->d->fractal == 6)
-		bsjulia(threads);
-	if (threads->d->fractal == 5)
-		mandel(threads);
-	if (threads->d->fractal == 4)
+	if (threads->d->fractal == 0 && !threads->d->julia)
+		threads->d->fractals[0](threads);
+	if (threads->d->fractal == 0 && threads->d->julia)
 		julia(threads);
-	if (threads->d->fractal == 3)
-		bship(threads);
-	if (threads->d->fractal == 2)
-		heart(threads);
-	if (threads->d->fractal == 1)
-		tricorn(threads);
-	if (threads->d->fractal == 0)
-		mobius(threads);
+	if (threads->d->fractal == 1 && !threads->d->julia)
+		threads->d->fractals[1](threads);
+	if (threads->d->fractal == 1 && threads->d->julia)
+		bsjulia(threads);
+	if (threads->d->fractal == 2 && !threads->d->julia)
+		threads->d->fractals[2](threads);
+	if (threads->d->fractal == 2 && threads->d->julia)
+		csjulia(threads);
+	if (threads->d->fractal == 3 && !threads->d->julia)
+		threads->d->fractals[3](threads);
+	if (threads->d->fractal == 3 && threads->d->julia)
+		hejulia(threads);
+	if (threads->d->fractal == 4 && !threads->d->julia)
+		threads->d->fractals[4](threads);
+	if (threads->d->fractal == 4 && threads->d->julia)
+		trjulia(threads);
 	pthread_exit(NULL);
 }

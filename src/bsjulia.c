@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 06:49:42 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/25 05:56:02 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/26 17:09:37 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static t_fract	m_init(t_threads *t)
 	m.image_y = (m.y2 - m.y1) * m.zoomy;
 	m.max = t->d->iter;
 	m.y = 0;
-	m.c.r = (double)t->d->x_m * 2 / WSIZE - 1;
-	m.c.i = (double)t->d->y_m * 2 / WSIZE - 1;
+	m.c.r = (double)t->d->x_j * 2 / WSIZE - 1;
+	m.c.i = (double)t->d->y_j * 2 / WSIZE - 1;
 	return (m);
 }
 
