@@ -6,7 +6,7 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/26 18:52:46 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/28 06:40:02 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,12 @@ NAME="fractol"
 SRC_NAME =	main.c\
 			fract.c\
 			graphic.c\
+			get_next_line.c\
 			key.c\
 			mouse.c\
 			color.c\
 			f_menu.c\
+			c_menu.c\
 			mandel.c\
 			julia.c\
 			bship.c\

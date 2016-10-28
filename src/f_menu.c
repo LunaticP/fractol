@@ -6,12 +6,13 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/26 18:51:47 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/27 03:27:25 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/28 06:40:48 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
 #include <menu.h>
+#include <get_next_line.h>
 
 #define Y_S (int)(26.25 * m.n_opt)
 
@@ -49,12 +50,10 @@ int		in_sq(t_menu m, int posx, int posy)
 	return (1);
 }
 
-void	new_menu(t_data *d, t_menu m, char **str)
+void	new_menu(t_data *d, t_menu m)
 {
 	t_draw	x;
 	int		opt;
-	int		s_menu[5] = {1, 0, 1, 0, 0};
-	char	*frct[5] = {"Mandelbrot", "Burning Ship", "Celtic Square", "Heart", "Tricorn"};
 
 	x.x = m.x;
 	x.y = m.y;
@@ -64,41 +63,33 @@ void	new_menu(t_data *d, t_menu m, char **str)
 	opt = -1;
 	while (++opt < m.n_opt)
 	{
-		mlx_string_put(d->mlx, d->win, m.x + 25, m.y + 5 + (25 * opt), 0xCCCCCC, str[opt]);
-		if (s_menu[opt])
+		mlx_string_put(d->mlx, d->win, m.x + 25, m.y + 5 + (25 * opt), 0xCCCCCC, m.menu_names[opt]);
+		if (m.type[opt] == 0)
 			mlx_string_put(d->mlx, d->win, m.x + m.len - 25, m.y + 5 + (25 * opt), 0xCCCCCC, ">");
+		if (m.type[opt] == 1)
+			mlx_string_put(d->mlx, d->win, m.x + m.len - 25, m.y + 5 + (25 * opt), m.colors[opt], "o");
+		if (m.type[opt] == 2)
+			mlx_string_put(d->mlx, d->win, m.x + m.len - 25, m.y + 5 + (25 * opt), m.colors[opt], &(m.sign));
 	}
 	if (in_sq(m, d->x_m, d->y_m))
 	{
 		opt = -1;
 		while (++opt < m.n_opt)
 			if (d->y_m > m.y + 5 + (25 * opt - 1) && d->y_m < m.y + 5 + (25 * (opt + 1)))
-			{
 				mlx_string_put(d->mlx, d->win, m.x + 5, m.y + 5 + (25 * opt), 0xFFFFFF, ">");
-				if (d->key & L_CLK && opt < m.s_opt)
-				{
-					m.x = d->x_me + m.len;
-					m.y = m.y + (25 * opt);
-					m.n_opt = 5;
-					m.s_opt = 5;
-					m.len = 200;
-					m.depth++;
-					new_menu(d, m, frct);
-				}
-			}
 	}
 }
 
 void	f_menu(t_data *d)
 {
+	int		fd;
 	t_menu	m;
-	char	*str[5] = {"Fractals", "Julia", "Colors", "Reset", "Close"};
-
-	m.n_opt = 5;
-	m.s_opt = 3;
+	
+	fd = open("./f_menu.cfg", O_RDONLY);
+	m = c_menu(fd);
 	m.len = 150;
+	m.depth = 0;
 	m.x = (d->x_me < WSIZE - m.len) ? d->x_me : WSIZE - m.len;
 	m.y = (d->y_me < WSIZE - Y_S) ? d->y_me : WSIZE - Y_S;
-	m.depth = 0;
-	new_menu(d, m, str);
+	new_menu(d, m);
 }

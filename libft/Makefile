@@ -6,7 +6,7 @@
 #    By: aviau <aviau@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/09 02:00:53 by aviau             #+#    #+#              #
-#    Updated: 2016/10/20 22:36:10 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/28 07:00:40 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC =	ft_isascii.c ft_memchr.c ft_putchar.c ft_putstr.c ft_strcpy.c \
 		ft_memset.c ft_putnbr_fd.c ft_strcmp.c ft_striteri.c ft_strncat.c \
 		ft_strrchr.c ft_toupper.c ft_lstadd.c ft_lstdelone.c ft_lstmap.c \
 		ft_lstdel.c ft_lstiter.c ft_lstnew.c ft_sort.c ft_strblk.c \
-		ft_disptab.c ft_power.c ft_square.c
+		ft_disptab.c ft_power.c ft_square.c ft_strndup.c
 
 OBJ = $(SRC:.c=.o)
 
