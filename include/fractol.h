@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/27 03:25:51 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/28 12:09:19 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ typedef struct	s_data
 	int			y_m;
 	int			x_j;
 	int			y_j;
-	int			x_me;
-	int			y_me;
-	int			color;
 	short		fractal;
 	short		julia;
 	double		x_pos;
@@ -116,16 +113,12 @@ typedef struct	s_lerp
 float	lerp(float v0, float v1, float t);
 void	fract(void *t);
 int		color(t_fract f, t_threads *t);
-void	mandel(t_threads *threads);
-void	julia(t_threads *threads);
-void	bship(t_threads *threads);
-void	bsjulia(t_threads *threads);
-void	heart(t_threads *threads);
-void	hejulia(t_threads *threads);
-void	celtic(t_threads *threads);
-void	csjulia(t_threads *threads);
-void	tricorn(t_threads *threads);
-void	trjulia(t_threads *threads);
+void	draw_fract(t_threads *threads);
+void	f_mandel(t_fract *m, int *col);
+void	f_bship(t_fract *m, int *col);
+void	f_heart(t_fract *m, int *col);
+void	f_celtic(t_fract *m, int *col);
+void	f_tricorn(t_fract *m, int *col);
 void	put_px(t_data *data, int x, int y, int color);
 int		k_press(int key, t_data *d);
 int		k_rel(int key, t_data *d);
@@ -133,8 +126,6 @@ int		mouse(int x, int y, t_data *d);
 int		mp_button(int button, int x, int y, t_data *d);
 int		mr_button(int button, int x, int y, t_data *d);
 void	k_apply(t_data *d);
-void	f_menu(t_data *d);
 int		get_color(int r, int g, int b);
-void	draw_line(t_data *data, t_draw *x);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 07:30:40 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/27 03:25:21 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/28 11:07:40 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,4 @@ float	lerp(float v0, float v1, float t)
 {
 	return ((1 - t) * v0 + t * v1); // precise
 	//return (v0 + t * (v1 - v0)); // imprecise
-}
-
-void	draw_line(t_data *data, t_draw *x)
-{
-	float			dx;
-	float			dy;
-	unsigned int	dd;
-	unsigned int	i;
-
-	dx = (x->x < x->x2) ? x->x2 - x->x : x->x - x->x2;
-	dy = (x->y < x->y2) ? x->y2 - x->y : x->y - x->y2;
-	dd = (dx > dy) ? dx : dy;
-	dx = dd != 0 ? (x->x2 - x->x) / dd : 1;
-	dy = dd != 0 ? (x->y2 - x->y) / dd : 1;
-	i = 0;
-	while (i < dd)
-	{
-		mlx_pixel_put (data->mlx, data->win, x->x + (dx * i), x->y + (dy * i), x->color);
-		i++;
-	}
 }

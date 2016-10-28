@@ -6,7 +6,7 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/26 18:52:46 by aviau            ###   ########.fr        #
+#    Updated: 2016/10/28 12:13:45 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,21 +14,11 @@ NAME="fractol"
 
 SRC_NAME =	main.c\
 			fract.c\
+			f_calc.c\
 			graphic.c\
 			key.c\
 			mouse.c\
 			color.c\
-			f_menu.c\
-			mandel.c\
-			julia.c\
-			bship.c\
-			bsjulia.c\
-			heart.c\
-			hejulia.c\
-			celtic.c\
-			csjulia.c\
-			tricorn.c\
-			trjulia.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC_PATH = ./src/

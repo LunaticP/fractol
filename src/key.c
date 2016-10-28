@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 23:36:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/26 19:31:33 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/28 12:21:03 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,18 @@ int		k_press(int key, t_data *d)
 		d->key += ITER;
 	if (!(d->key & DEITER) && KP_M)
 		d->key += DEITER;
-	if (!(d->key & JMOVE) && K_M)
+	if (!(d->key & JMOVE) && K_M && d->julia)
 		d->key += JMOVE;
-	else if (((d->key & JMOVE) && K_M))
+	else if ((d->key & JMOVE) && K_M && d->julia)
 		d->key -= JMOVE;
 	if (K_J && !d->julia)
-	{
-		d->key += SP;
 		d->julia = 1;
-	}
 	else if (K_J && d->julia)
-	{
-		d->key += SP;
 		d->julia = 0;
-	}
-	if (!(d->key & SP) && SPACE)
-	{
-		d->key += SP;
+	if (SPACE)
 		d->fractal = (d->fractal < 4) ? d->fractal + 1 : 0;
-	}
+	if (!(d->key & SP))
+		d->key += SP;
 	return (0);
 }
 
