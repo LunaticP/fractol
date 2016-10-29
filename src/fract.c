@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 11:58:45 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/28 12:05:42 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/29 17:41:46 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,30 @@ static t_fract	m_init(t_threads *t)
 	m.image_y = (m.y2 - m.y1) * m.zoomy;
 	m.y = -1;
 	m.max = t->d->iter;
-	if (t->d->julia)
+	if (t->d->key & J_ON)
 	{
 		m.c.r = (double)t->d->x_j * 2 / WSIZE - 1;
 		m.c.i = (double)t->d->y_j * 2 / WSIZE - 1;
 	}
 	return (m);
+}
+
+void			if_julia(t_threads *t, t_fract *m)
+{
+	if (t->d->key & J_ON)
+	{
+		m->z.r = -1.5 * (m->x - WSIZE / 2) /
+			(1 / t->d->zoom * WSIZE) - t->d->x_pos;
+		m->z.i = (m->y - WSIZE / 2) /
+			(1 / t->d->zoom * WSIZE) + t->d->y_pos;
+	}
+	else
+	{
+		m->z.r = 0;
+		m->z.i = 0;
+		m->c.r = m->x / m->zoomx + m->x1;
+		m->c.i = m->y / m->zoomy + m->y1;
+	}
 }
 
 void			draw_fract(t_threads *t)
@@ -45,19 +63,11 @@ void			draw_fract(t_threads *t)
 		m.x = m.image_x / THREAD * t->thd - 1;
 		while (++m.x < m.image_x / THREAD * (t->thd + 1.0))
 		{
-			if (t->d->julia)
-			{
-				m.z.r = -1.5 * (m.x - WSIZE / 2) / (1 / t->d->zoom * WSIZE) - t->d->x_pos;
-				m.z.i = (m.y - WSIZE / 2) / (1 / t->d->zoom * WSIZE) + t->d->y_pos;
-			}
-			else
-			{
-				m.z.r = 0;
-				m.z.i = 0;
-				m.c.r = m.x / m.zoomx + m.x1;
-				m.c.i = m.y / m.zoomy + m.y1;
-			}
-			t->d->fractals[t->d->fractal](&m, &(t->color));
+			if_julia(t, &m);
+			m.i = 0;
+			t->color = 0;
+			while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
+				t->d->fractals[t->d->fractal](&m, &(t->color), t->d->col_pattern);
 			t->color = (m.i < m.max) ? color(m, t) : 0;
 			put_px(t->d, m.x, m.y, t->color);
 		}

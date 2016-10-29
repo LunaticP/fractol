@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/28 12:09:19 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/29 18:41:02 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@
 #define WSIZE 600
 #define THREAD 8.0
 
+typedef struct	s_color
+{
+	int			r;
+	int			g;
+	int			b;
+}				t_color;
+
+typedef struct	s_threads t_threads;
 
 typedef struct	s_data
 {
@@ -41,17 +49,18 @@ typedef struct	s_data
 	int			x_j;
 	int			y_j;
 	short		fractal;
-	short		julia;
+	short		col_pattern;
+	short		col_rot;
 	double		x_pos;
 	double		y_pos;
 	double		zoom;
 	void		(**fractals)();
+	t_color		(**colors)(float, t_threads *);
 }				t_data;
 
 typedef struct	s_threads
 {
 	int			thd;
-	int			col;
 	int			color;
 	pthread_t	thds;
 	t_data		*d;
@@ -61,7 +70,6 @@ typedef struct	s_comp
 {
 	double		r;
 	double		i;
-	double		h;
 }				t_comp;
 
 typedef struct	s_fract
@@ -70,32 +78,17 @@ typedef struct	s_fract
 	double		x2;
 	double		y1;
 	double		y2;
-	double		zz1;
-	double		zz2;
 	double		zoomx;
 	double		zoomy;
-	double		zoomzz;
-	double		image_x_init;
 	double		image_x;
 	double		image_y;
-	double		image_zz;
 	t_comp		c;
 	t_comp		z;
-	t_comp		a;
-	t_comp		b;
 	int			x;
 	int			y;
-	int			zz;
 	int			i;
 	int			max;
 }				t_fract;
-
-typedef struct	s_color
-{
-	int			r;
-	int			g;
-	int			b;
-}				t_color;
 
 typedef struct	s_lerp
 {
@@ -114,11 +107,13 @@ float	lerp(float v0, float v1, float t);
 void	fract(void *t);
 int		color(t_fract f, t_threads *t);
 void	draw_fract(t_threads *threads);
-void	f_mandel(t_fract *m, int *col);
-void	f_bship(t_fract *m, int *col);
-void	f_heart(t_fract *m, int *col);
-void	f_celtic(t_fract *m, int *col);
-void	f_tricorn(t_fract *m, int *col);
+void	f_mandel(t_fract *m, int *col, int c);
+void	f_bship(t_fract *m, int *col, int c);
+void	f_heart(t_fract *m, int *col, int c);
+void	f_celtic(t_fract *m, int *col, int c);
+void	f_tricorn(t_fract *m, int *col, int c);
+t_color	orbit_trap(float i, t_threads *t);
+t_color	mono_col(float i, t_threads *t);
 void	put_px(t_data *data, int x, int y, int color);
 int		k_press(int key, t_data *d);
 int		k_rel(int key, t_data *d);

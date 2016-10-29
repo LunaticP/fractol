@@ -6,21 +6,60 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 23:36:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/28 12:21:03 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/29 18:39:43 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
 
+void	f_reset(t_data *d)
+{
+	d->iter = 30;
+	d->zoom = 2;
+	d->x_pos = 0;
+	d->y_pos = 0;
+}
+
+void	k_press_alt(int key, t_data *d)
+{
+	if (K_J && !(d->key & J_ON))
+	{
+		d->key += J_ON;
+		f_reset(d);
+	}
+	else if (K_J && (d->key & J_ON))
+	{
+		d->key -= J_ON;
+		f_reset(d);
+	}
+	if (!(d->key & JMOVE) && K_M && (d->key & J_ON))
+		d->key += JMOVE;
+	else if ((d->key & JMOVE) && K_M && (d->key & J_ON))
+		d->key -= JMOVE;
+	if (!(d->key & LERP) && K_L)
+		d->key += LERP;
+	else if ((d->key & LERP) && K_L)
+		d->key -= LERP;
+	if (SPACE)
+	{
+		d->fractal = (d->fractal < 4) ? d->fractal + 1 : 0;
+		f_reset(d);
+	}
+	if (K_C)
+		d->col_pattern = (d->col_pattern < 4) ? d->col_pattern + 1 : 0;
+	if (K_R)
+		d->col_rot = (d->col_rot < 6) ? d->col_rot + 1 : 0;
+}
+
 int		k_press(int key, t_data *d)
 {
-	if (!(d->key & LEFT) && K_L)
+	if (!(d->key & LEFT) && K_LD)
 		d->key += LEFT;
-	if (!(d->key & RIGHT) && K_R)
+	if (!(d->key & RIGHT) && K_RD)
 		d->key += RIGHT;
-	if (!(d->key & DOWN) && K_D)
+	if (!(d->key & DOWN) && K_DD)
 		d->key += DOWN;
-	if (!(d->key & UP) && K_U)
+	if (!(d->key & UP) && K_UD)
 		d->key += UP;
 	if (!(d->key & ZOOM) && KP_F)
 		d->key += ZOOM;
@@ -30,16 +69,7 @@ int		k_press(int key, t_data *d)
 		d->key += ITER;
 	if (!(d->key & DEITER) && KP_M)
 		d->key += DEITER;
-	if (!(d->key & JMOVE) && K_M && d->julia)
-		d->key += JMOVE;
-	else if ((d->key & JMOVE) && K_M && d->julia)
-		d->key -= JMOVE;
-	if (K_J && !d->julia)
-		d->julia = 1;
-	else if (K_J && d->julia)
-		d->julia = 0;
-	if (SPACE)
-		d->fractal = (d->fractal < 4) ? d->fractal + 1 : 0;
+	k_press_alt(key, d);
 	if (!(d->key & SP))
 		d->key += SP;
 	return (0);
@@ -47,13 +77,13 @@ int		k_press(int key, t_data *d)
 
 int		k_rel(int key, t_data *d)
 {
-	if ((d->key & LEFT) && K_L)
+	if ((d->key & LEFT) && K_LD)
 		d->key -= LEFT;
-	if ((d->key & RIGHT) && K_R)
+	if ((d->key & RIGHT) && K_RD)
 		d->key -= RIGHT;
-	if ((d->key & DOWN) && K_D)
+	if ((d->key & DOWN) && K_DD)
 		d->key -= DOWN;
-	if ((d->key & UP) && K_U)
+	if ((d->key & UP) && K_UD)
 		d->key -= UP;
 	if ((d->key & ZOOM) && KP_F)
 		d->key -= ZOOM;

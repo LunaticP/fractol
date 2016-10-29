@@ -6,19 +6,22 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/01 08:22:24 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/26 15:35:42 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/29 18:33:53 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEY_H
 # define KEY_H
 
-# define K_L	key == 123
-# define K_R	key == 124
-# define K_D	key == 125
-# define K_U	key == 126
+# define K_LD	key == 123
+# define K_RD	key == 124
+# define K_DD	key == 125
+# define K_UD	key == 126
 # define K_J	key == 38
 # define K_M	key == 46
+# define K_C	key == 8
+# define K_L	key == 37
+# define K_R	key == 15
 # define KP_0	key == 82
 # define KP_1	key == 83
 # define KP_2	key == 84
@@ -41,22 +44,22 @@
 # define U_SCROL button == 4
 # define D_SCROL button == 5
 
-# define LEFT	0x0001
-# define RIGHT	0x0002
-# define DOWN	0x0004
-# define UP		0x0008
-# define ZOOM	0x0010
-# define DEZOOM	0x0020
-# define ITER	0x0040
-# define DEITER	0x0080
-# define SP		0x0100
-# define L_CLK	0x0200
-# define R_CLK	0x0400
-# define M_CLK	0x0800
-# define U_SCL	0x1000
-# define D_SCL	0x2000
-# define JMOVE	0x4000
-//# define NONE	0x4000
-//# define NONE	0x8000
+# define LEFT	0x00001
+# define RIGHT	0x00002
+# define DOWN	0x00004
+# define UP		0x00008
+# define ZOOM	0x00010
+# define DEZOOM	0x00020
+# define ITER	0x00040
+# define DEITER	0x00080
+# define SP		0x00100
+# define L_CLK	0x00200
+# define R_CLK	0x00400
+# define M_CLK	0x00800
+# define U_SCL	0x01000
+# define D_SCL	0x02000
+# define JMOVE	0x04000
+# define J_ON	0x08000
+# define LERP	0x10000
 
 #endif

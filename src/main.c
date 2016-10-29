@@ -6,12 +6,11 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 04:10:02 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/28 12:11:27 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/29 18:41:29 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
-#include <stdio.h>
 
 void	destroy(t_threads *t)
 {
@@ -23,19 +22,17 @@ void	destroy(t_threads *t)
 int		fractoloop(void *threads)
 {
 	int			i;
-	static int	cols[8] = {0xFF0000, 0x00FF00, 0x0000FF, 0xFF00FF, 0xFFFF00, 0x00FFFF, 0x999999, 0xFFFFFF};
 	t_threads	*t;
 
-	i = -1;
 	t = (t_threads *)threads;
 	if (t[0].d->key == -1)
 		destroy(t);
 	if (!t[0].d->key)
 		return (0);
 	k_apply(t[0].d);
+	i = -1;
 	while (++i < THREAD)
 	{
-		t[i].col = cols[i];
 		t[i].thd = i;
 		pthread_create(&t[i].thds, NULL, (void *)&draw_fract, (void *)&t[i]);
 	}
@@ -48,13 +45,10 @@ int		fractoloop(void *threads)
 	return (0);
 }
 
-int		main(void)
+t_data	init_data(void)
 {
-	t_threads	threads[(int)THREAD];
-	t_data		d;
-	int			i;
+	t_data	d;
 
-	i = -1;
 	d.mlx = mlx_init();
 	d.win = mlx_new_window(d.mlx, WSIZE, WSIZE, "fractol");
 	d.img = mlx_new_image(d.mlx, WSIZE, WSIZE);
@@ -64,14 +58,30 @@ int		main(void)
 	d.x_pos = 0;
 	d.y_pos = 0;
 	d.fractal = 0;
-	d.julia = 0;
-	d.fractals = (void (**)())ft_memalloc(sizeof(void (*)()) * 5);
+	d.fractals = ft_memalloc(sizeof(void (*)()) * 5);
+	d.colors = ft_memalloc(8 * 5);
 	d.fractals[0] = &f_mandel;
 	d.fractals[1] = &f_bship;
 	d.fractals[2] = &f_celtic;
 	d.fractals[3] = &f_heart;
 	d.fractals[4] = &f_tricorn;
+	d.colors[0] = &orbit_trap;
+	d.colors[1] = &mono_col;
+	d.colors[2] = &mono_col;
+	d.colors[3] = &mono_col;
+	d.colors[4] = &mono_col;
 	d.key = SP;
+	return (d);
+}
+
+int		main(void)
+{
+	t_threads	threads[(int)THREAD];
+	t_data		d;
+	int			i;
+
+	d = init_data();
+	i = -1;
 	while (++i < THREAD)
 		threads[i].d = &d;
 	mlx_hook(d.win, 2, (1L << 0), &k_press, &d);

@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 07:30:40 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/28 11:07:40 by aviau            ###   ########.fr       */
+/*   Updated: 2016/10/29 15:18:21 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ void	put_px(t_data *data, int x, int y, int color)
 
 float	lerp(float v0, float v1, float t)
 {
-	return ((1 - t) * v0 + t * v1); // precise
-	//return (v0 + t * (v1 - v0)); // imprecise
+	return ((1 - t) * v0 + t * v1);
 }
