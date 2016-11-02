@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 06:03:17 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 08:44:21 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <math.h>
 # include <pthread.h>
 
-#define WSIZE 400
+#define WSIZE 600
 #define THREAD 8.0
 
 typedef struct	s_color
@@ -115,6 +115,7 @@ void	f_tricorn(t_fract *m, int *col, int c);
 t_color	orbit_trap(float i, t_threads *t);
 t_color	orbit_trap2(float i, t_threads *t);
 t_color	mono_col(float i, t_threads *t);
+t_color	palette(float i, t_threads *t);
 void	put_px(t_data *data, int x, int y, int color);
 int		k_press(int key, t_data *d);
 int		k_rel(int key, t_data *d);

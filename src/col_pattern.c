@@ -6,11 +6,27 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/29 17:39:58 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 03:08:32 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 08:39:32 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
+
+t_color	palette(float i, t_threads *t)
+{
+	static int  colr[16] = {25, 15, 9, 5, 2, 16, 29, 61,
+		136, 212, 241, 247, 252, 201, 126, 65};
+	static int  colg[16] = {8, 6, 3, 7, 13, 48, 85, 127,
+		182, 235, 231, 199, 168, 126, 67, 30};
+	static int  colb[16] = {26, 43, 46, 71, 97, 136, 174,
+		206, 227, 246, 192, 102, 40, 29, 14, 17};
+	t_color		c;
+
+	c.r = colr[(int)i % 16];
+	c.g = colg[(int)i % 16];
+	c.b = colb[(int)i % 16];
+	return (c);
+}
 
 t_color	mono_col(float i, t_threads *t)
 {

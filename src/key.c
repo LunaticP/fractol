@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 23:36:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 03:09:56 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 09:06:47 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	k_press_alt(int key, t_data *d)
 	if (K_C)
 		d->col_pat = (d->col_pat < 4) ? d->col_pat + 1 : 0;
 	if (K_R)
-		d->col_rot = (d->col_rot < 100) ? d->col_rot + 1 : 0;
+		d->col_rot = (d->col_rot < 255) ? d->col_rot + 1 : 0;
 }
 
 int		k_press(int key, t_data *d)

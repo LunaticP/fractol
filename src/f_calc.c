@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 11:59:27 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 02:49:20 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 06:26:43 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void		f_heart(t_fract *m, int *col, int c)
 	double	tmp;
 
 	tmp = m->z.r;
-	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i - m->c.i;
-	m->z.i = -2 * m->z.i * tmp * tmp + m->c.r;
+	m->z.r = m->z.r * m->z.r - m->z.i * m->z.i - m->c.i * 2;
+	m->z.i = 2 * m->z.i * tmp * tmp + m->c.r;
 	m->i++;
 	if (c == 2)
 		*col += exp(-fabs(log(m->max / (double)m->i) +

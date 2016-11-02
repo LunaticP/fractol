@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 11:58:45 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 05:56:26 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 09:52:41 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void			draw_fract(t_threads *t)
 			m.i = 0;
 			t->color = 0;
 			p = sqrt((m.c.r - 1.0f / 4.0f) * (m.c.r - 1.0f / 4.0f) + m.c.i * m.c.i);
-			if (!t->d->fractal && m.c.r < p - 2 * (p * p) + 1.0f / 4.0f && t->d->col_pat != 1)
-				t->color = 0x000000;
+			if (!t->d->fractal && m.c.r < p - 2 * (p * p) + 1.0f / 4.0f && t->d->col_pat != 1 && !(t->d->key & J_ON))
+				t->color = 0;
 			else
 			{
 				while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
@@ -78,12 +78,12 @@ void			draw_fract(t_threads *t)
 					if (m.i > 1 && fabs(m.z.r) < 0.03f && t->d->col_pat == 1)
 					{
 						t->color = (0.03f - fabs(m.z.r)) * 255 * 20;
-						break;
+						break ;
 					}
 					if (m.i > 1 && fabs(m.z.i) < 0.03f && t->d->col_pat == 1)
 					{
 						t->color = (0.03f - fabs(m.z.i)) * 255 * 20;
-						break;
+						break ;
 					}
 					t->d->calc[t->d->fractal](&m, &(t->color), t->d->col_pat);
 				}
