@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/29 17:39:58 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/29 18:44:28 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 03:08:32 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,23 @@ t_color	mono_col(float i, t_threads *t)
 {
 	t_color		c;
 
-	(void)i;
-	c.r = (t->d->col_rot < 3 || t->d->col_rot > 5) ? 255 : 0;
-	c.g = (t->d->col_rot > 0 || t->d->col_rot < 5) ? 255 : 0;
-	c.b = (t->d->col_rot > 3) ? 255 : 0;
+	c.r = (-sin(i / 57.2957795131) > 0) ? -sin(i / 57.2957795131) * 255 : 0;
+	c.g = (sin(i / 57.2957795131) > 0) ? sin(i / 57.2957795131) * 255 : 0;
+	c.b = (-cos(i / 57.2957795131) > 0) ? -cos(i / 57.2957795131) * 255 : 0;
 	return (c);
 }
 
 t_color	orbit_trap(float i, t_threads *t)
+{
+	t_color		c;
+
+	c.r = (cos(i)) > 0 ? (cos(i) * t->color) : 0;
+	c.g = (sin(i)) > 0 ? (sin(i) * t->color) : 0;
+	c.b = (-cos(i)) > 0 ? (-cos(i) * t->color) : 0;
+	return (c);
+}
+
+t_color	orbit_trap2(float i, t_threads *t)
 {
 	t_color		c;
 

@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 11:41:43 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/29 18:40:42 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 02:53:20 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	lerp_col(t_fract f, t_threads *t)
 	l.log_zn = log(f.z.r * f.z.r + f.z.i * f.z.i) / 2.0;
 	l.nu = log(l.log_zn / log(2)) / log(2);
 	l.i = f.i + 1.0 - l.nu;
-	c = t->d->colors[t->d->col_pattern](l.i, t);
+	c = t->d->colors[t->d->col_pat](l.i, t);
 	l.r1 = c.r;
 	l.g1 = c.g;
 	l.b1 = c.b;
-	c = t->d->colors[t->d->col_pattern](l.i + 1, t);
+	c = t->d->colors[t->d->col_pat](l.i + 1, t);
 	l.r2 = c.r;
 	l.g2 = c.g;
 	l.b2 = c.b;
@@ -42,7 +42,7 @@ int	color(t_fract f, t_threads *t)
 		return (lerp_col(f, t));
 	else
 	{
-		c = t->d->colors[t->d->col_pattern](f.i, t);
+		c = t->d->colors[t->d->col_pat](f.i, t);
 		return (get_color(c.r, c.g, c.b));
 	}
 		

@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 04:10:02 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/29 18:41:29 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 05:03:37 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,30 @@ int		fractoloop(void *threads)
 	return (0);
 }
 
-t_data	init_data(void)
+int		f_start(char *start)
+{
+	if (start == NULL)
+		return (-1);
+	else if (ft_strcmp(start, "mandel"))
+		return (0);
+	else if (ft_strcmp(start, "bship"))
+		return (1);
+	else if (ft_strcmp(start, "celtic"))
+		return (2);
+	else if (ft_strcmp(start, "heart"))
+		return (3);
+	else if (ft_strcmp(start, "tricorn"))
+		return (4);
+	else
+		return (-1);
+}
+
+t_data	init_data(char *start)
 {
 	t_data	d;
 
+	if ((d.fractal = f_start(start)) == -1)
+		return (d);
 	d.mlx = mlx_init();
 	d.win = mlx_new_window(d.mlx, WSIZE, WSIZE, "fractol");
 	d.img = mlx_new_image(d.mlx, WSIZE, WSIZE);
@@ -57,30 +77,37 @@ t_data	init_data(void)
 	d.zoom = 2;
 	d.x_pos = 0;
 	d.y_pos = 0;
-	d.fractal = 0;
-	d.fractals = ft_memalloc(sizeof(void (*)()) * 5);
+	d.calc = ft_memalloc(sizeof(void (*)()) * 5);
 	d.colors = ft_memalloc(8 * 5);
-	d.fractals[0] = &f_mandel;
-	d.fractals[1] = &f_bship;
-	d.fractals[2] = &f_celtic;
-	d.fractals[3] = &f_heart;
-	d.fractals[4] = &f_tricorn;
-	d.colors[0] = &orbit_trap;
-	d.colors[1] = &mono_col;
-	d.colors[2] = &mono_col;
+	d.calc[0] = &f_mandel;
+	d.calc[1] = &f_bship;
+	d.calc[2] = &f_celtic;
+	d.calc[3] = &f_heart;
+	d.calc[4] = &f_tricorn;
+	d.colors[0] = &mono_col;
+	d.colors[1] = &orbit_trap;
+	d.colors[2] = &orbit_trap2;
 	d.colors[3] = &mono_col;
 	d.colors[4] = &mono_col;
 	d.key = SP;
 	return (d);
 }
 
-int		main(void)
+int		main(int ac, char **av)
 {
 	t_threads	threads[(int)THREAD];
 	t_data		d;
 	int			i;
 
-	d = init_data();
+	d = init_data(av[1]);
+	if (ac != 2 || !ft_strcmp(av[1], "-h") || d.fractal == -1)
+	{
+		ft_putstr("\e[32m./fractol\e[0m < \e[36mfractal\e[0m >\n");
+		ft_putstr("\e[10C\e[31mx none   \e[0m(\e[33mmandel\e[0m)\n");
+		ft_putstr("\e[33m\e[10C- mandel\n\e[10C- bship\n\e[10C- celtic\n");
+		ft_putstr("\e[10C- heart\n\e[10C- tricorn\n\e[0m");
+		return (0);
+	}
 	i = -1;
 	while (++i < THREAD)
 		threads[i].d = &d;

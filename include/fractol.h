@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/29 18:41:02 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 06:03:17 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <math.h>
 # include <pthread.h>
 
-#define WSIZE 600
+#define WSIZE 400
 #define THREAD 8.0
 
 typedef struct	s_color
@@ -49,12 +49,12 @@ typedef struct	s_data
 	int			x_j;
 	int			y_j;
 	short		fractal;
-	short		col_pattern;
+	short		col_pat;
 	short		col_rot;
 	double		x_pos;
 	double		y_pos;
 	double		zoom;
-	void		(**fractals)();
+	void		(**calc)();
 	t_color		(**colors)(float, t_threads *);
 }				t_data;
 
@@ -113,6 +113,7 @@ void	f_heart(t_fract *m, int *col, int c);
 void	f_celtic(t_fract *m, int *col, int c);
 void	f_tricorn(t_fract *m, int *col, int c);
 t_color	orbit_trap(float i, t_threads *t);
+t_color	orbit_trap2(float i, t_threads *t);
 t_color	mono_col(float i, t_threads *t);
 void	put_px(t_data *data, int x, int y, int color);
 int		k_press(int key, t_data *d);

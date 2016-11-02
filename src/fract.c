@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 11:58:45 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/29 17:41:46 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 05:56:26 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void			if_julia(t_threads *t, t_fract *m)
 void			draw_fract(t_threads *t)
 {
 	t_fract		m;
+	double		p;
 
 	m = m_init(t);
 	while (++m.y < m.image_y)
@@ -63,12 +64,31 @@ void			draw_fract(t_threads *t)
 		m.x = m.image_x / THREAD * t->thd - 1;
 		while (++m.x < m.image_x / THREAD * (t->thd + 1.0))
 		{
+
 			if_julia(t, &m);
 			m.i = 0;
 			t->color = 0;
-			while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
-				t->d->fractals[t->d->fractal](&m, &(t->color), t->d->col_pattern);
-			t->color = (m.i < m.max) ? color(m, t) : 0;
+			p = sqrt((m.c.r - 1.0f / 4.0f) * (m.c.r - 1.0f / 4.0f) + m.c.i * m.c.i);
+			if (!t->d->fractal && m.c.r < p - 2 * (p * p) + 1.0f / 4.0f && t->d->col_pat != 1)
+				t->color = 0x000000;
+			else
+			{
+				while (m.z.r * m.z.r + m.z.i * m.z.i < 4 && m.i < m.max)
+				{
+					if (m.i > 1 && fabs(m.z.r) < 0.03f && t->d->col_pat == 1)
+					{
+						t->color = (0.03f - fabs(m.z.r)) * 255 * 20;
+						break;
+					}
+					if (m.i > 1 && fabs(m.z.i) < 0.03f && t->d->col_pat == 1)
+					{
+						t->color = (0.03f - fabs(m.z.i)) * 255 * 20;
+						break;
+					}
+					t->d->calc[t->d->fractal](&m, &(t->color), t->d->col_pat);
+				}
+				t->color = (m.i < m.max) ? color(m, t) : 0;
+			}
 			put_px(t->d, m.x, m.y, t->color);
 		}
 	}
