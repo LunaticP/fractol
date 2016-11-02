@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 04:10:02 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 06:55:32 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 14:14:28 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_data	init_data(char *start)
 	d.colors[1] = &orbit_trap;
 	d.colors[2] = &orbit_trap2;
 	d.colors[3] = &palette;
-	d.colors[4] = &mono_col;
+	d.colors[4] = &rainbow;
 	d.key = SP;
 	return (d);
 }

@@ -6,11 +6,21 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/29 17:39:58 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 08:39:32 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 14:27:55 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
+
+t_color	rainbow(float i, t_threads *t)
+{
+	t_color	c;
+
+	c.r = (cos(i) > 0) ? cos(i) * 255 : 0;
+	c.g = (sin(i) > 0) ? sin(i) * 255 : 0;
+	c.b = (-cos(i) > 0) ? -cos(i) * 255 : 0;
+	return (c);
+}
 
 t_color	palette(float i, t_threads *t)
 {
@@ -22,6 +32,7 @@ t_color	palette(float i, t_threads *t)
 		206, 227, 246, 192, 102, 40, 29, 14, 17};
 	t_color		c;
 
+	(void)t;
 	c.r = colr[(int)i % 16];
 	c.g = colg[(int)i % 16];
 	c.b = colb[(int)i % 16];
@@ -32,6 +43,7 @@ t_color	mono_col(float i, t_threads *t)
 {
 	t_color		c;
 
+	(void)t;
 	c.r = (-sin(i / 57.2957795131) > 0) ? -sin(i / 57.2957795131) * 255 : 0;
 	c.g = (sin(i / 57.2957795131) > 0) ? sin(i / 57.2957795131) * 255 : 0;
 	c.b = (-cos(i / 57.2957795131) > 0) ? -cos(i / 57.2957795131) * 255 : 0;

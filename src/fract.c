@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 11:58:45 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 09:52:41 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 11:03:34 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_fract	m_init(t_threads *t)
 {
 	t_fract	m;
 
-	m.x1 = (-1 + (1 - t->d->zoom)) + t->d->x_pos;
+	m.x1 = (-2.5 + (2.5 - t->d->zoom)) + t->d->x_pos;
 	m.x2 = (1 - (1 - t->d->zoom)) + t->d->x_pos;
 	m.y1 = (-1 + (1 - t->d->zoom)) + t->d->y_pos;
 	m.y2 = (1 - (1 - t->d->zoom)) + t->d->y_pos;
@@ -87,7 +87,7 @@ void			draw_fract(t_threads *t)
 					}
 					t->d->calc[t->d->fractal](&m, &(t->color), t->d->col_pat);
 				}
-				t->color = (m.i < m.max) ? color(m, t) : 0;
+				t->color = (m.i < m.max) ? color(&m, t) : 0;
 			}
 			put_px(t->d, m.x, m.y, t->color);
 		}

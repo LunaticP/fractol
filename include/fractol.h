@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 08:44:21 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/02 14:15:06 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct	s_lerp
 
 float	lerp(float v0, float v1, float t);
 void	fract(void *t);
-int		color(t_fract f, t_threads *t);
+int		color(t_fract *f, t_threads *t);
 void	draw_fract(t_threads *threads);
 void	f_mandel(t_fract *m, int *col, int c);
 void	f_bship(t_fract *m, int *col, int c);
@@ -116,6 +116,7 @@ t_color	orbit_trap(float i, t_threads *t);
 t_color	orbit_trap2(float i, t_threads *t);
 t_color	mono_col(float i, t_threads *t);
 t_color	palette(float i, t_threads *t);
+t_color	rainbow(float i, t_threads *t);
 void	put_px(t_data *data, int x, int y, int color);
 int		k_press(int key, t_data *d);
 int		k_rel(int key, t_data *d);
