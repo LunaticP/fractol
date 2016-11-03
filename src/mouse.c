@@ -6,13 +6,13 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/26 14:29:52 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/29 13:31:23 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/03 17:58:27 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
 
-int		mp_button(int button, int x, int y, t_data *d)
+int			mp_button(int button, int x, int y, t_data *d)
 {
 	if (!(d->key & L_CLK) && L_CLICK)
 		d->key += L_CLK;
@@ -41,7 +41,7 @@ int		mp_button(int button, int x, int y, t_data *d)
 	return (0);
 }
 
-int		mr_button(int button, int x, int y, t_data *d)
+int			mr_button(int button, int x, int y, t_data *d)
 {
 	(void)(x);
 	(void)(y);
@@ -54,7 +54,7 @@ int		mr_button(int button, int x, int y, t_data *d)
 	return (0);
 }
 
-void	move_clk(int x, int y, t_data *d)
+static void	move_clk(int x, int y, t_data *d)
 {
 	if (x > d->x_m && d->x_pos > -2)
 		d->x_pos -= d->zoom / 300 * (x - d->x_m);
@@ -68,7 +68,7 @@ void	move_clk(int x, int y, t_data *d)
 	d->y_m = y;
 }
 
-int		mouse(int x, int y, t_data *d)
+int			mouse(int x, int y, t_data *d)
 {
 	if (!(d->key & L_CLK))
 	{

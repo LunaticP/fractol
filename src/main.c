@@ -6,20 +6,20 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 04:10:02 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 14:14:28 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/03 18:05:39 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
 
-void	destroy(t_threads *t)
+static void		destroy(t_threads *t)
 {
 	mlx_destroy_image(t[0].d->mlx, t[0].d->img);
 	mlx_destroy_window(t[0].d->mlx, t[0].d->win);
 	exit(0);
 }
 
-int		fractoloop(void *threads)
+static int		fractoloop(void *threads)
 {
 	int			i;
 	t_threads	*t;
@@ -45,7 +45,7 @@ int		fractoloop(void *threads)
 	return (0);
 }
 
-int		f_start(char *start)
+static int		f_start(char *start)
 {
 	if (start == NULL)
 		return (-1);
@@ -63,7 +63,7 @@ int		f_start(char *start)
 		return (-1);
 }
 
-t_data	init_data(char *start)
+static t_data	init_data(char *start)
 {
 	t_data	d;
 
@@ -89,11 +89,10 @@ t_data	init_data(char *start)
 	d.colors[2] = &orbit_trap2;
 	d.colors[3] = &palette;
 	d.colors[4] = &rainbow;
-	d.key = SP;
 	return (d);
 }
 
-int		main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	t_threads	threads[(int)THREAD];
 	t_data		d;
@@ -110,6 +109,7 @@ int		main(int ac, char **av)
 	i = -1;
 	while (++i < THREAD)
 		threads[i].d = &d;
+	d.key = SP;
 	mlx_hook(d.win, 2, (1L << 0), &k_press, &d);
 	mlx_hook(d.win, 3, (1L << 1), &k_rel, &d);
 	mlx_hook(d.win, 4, (1L << 2), &mp_button, &d);

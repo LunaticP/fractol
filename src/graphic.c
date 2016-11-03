@@ -6,12 +6,11 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/16 07:30:40 by aviau             #+#    #+#             */
-/*   Updated: 2016/10/29 15:18:21 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/03 18:06:30 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
-#include <menu.h>
 
 int		get_color(int r, int g, int b)
 {

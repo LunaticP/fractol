@@ -6,7 +6,7 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 15:52:17 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 14:15:06 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/03 18:20:57 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 # include "mlx.h"
 # include "libft.h"
 # include "key.h"
-# include "menu.h"
 # include <math.h>
 # include <pthread.h>
 
-#define WSIZE 600
+#define WSIZE 1000
 #define THREAD 8.0
 
 typedef struct	s_color

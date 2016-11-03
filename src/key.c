@@ -6,13 +6,13 @@
 /*   By: aviau <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 23:36:53 by aviau             #+#    #+#             */
-/*   Updated: 2016/11/02 14:10:08 by aviau            ###   ########.fr       */
+/*   Updated: 2016/11/03 18:05:27 by aviau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
 
-void	f_reset(t_data *d)
+static void	f_reset(t_data *d)
 {
 	d->iter = 30;
 	d->zoom = 2;
@@ -20,7 +20,7 @@ void	f_reset(t_data *d)
 	d->y_pos = 0;
 }
 
-void	k_press_alt(int key, t_data *d)
+static void	k_press_alt(int key, t_data *d)
 {
 	if (K_J && !(d->key & J_ON))
 	{
@@ -36,10 +36,6 @@ void	k_press_alt(int key, t_data *d)
 		d->key += JMOVE;
 	else if ((d->key & JMOVE) && K_M && (d->key & J_ON))
 		d->key -= JMOVE;
-	if (!(d->key & LERP) && K_L)
-		d->key += LERP;
-	else if ((d->key & LERP) && K_L)
-		d->key -= LERP;
 	if (SPACE)
 	{
 		d->fractal = (d->fractal < 4) ? d->fractal + 1 : 0;
@@ -48,10 +44,10 @@ void	k_press_alt(int key, t_data *d)
 	if (K_C)
 		d->col_pat = (d->col_pat < 4) ? d->col_pat + 1 : 0;
 	if (K_R)
-		d->col_rot = (d->col_rot < 255) ? d->col_rot + 1 : 0;
+		d->col_rot = (d->col_rot < 360) ? d->col_rot + 1 : 0;
 }
 
-int		k_press(int key, t_data *d)
+int			k_press(int key, t_data *d)
 {
 	if (!(d->key & LEFT) && K_LD)
 		d->key += LEFT;
@@ -69,13 +65,17 @@ int		k_press(int key, t_data *d)
 		d->key += ITER;
 	if (!(d->key & DEITER) && KP_M)
 		d->key += DEITER;
+	if (!(d->key & LERP) && K_L)
+		d->key += LERP;
+	else if ((d->key & LERP) && K_L)
+		d->key -= LERP;
 	k_press_alt(key, d);
 	if (!(d->key & SP))
 		d->key += SP;
 	return (0);
 }
 
-int		k_rel(int key, t_data *d)
+int			k_rel(int key, t_data *d)
 {
 	if ((d->key & LEFT) && K_LD)
 		d->key -= LEFT;
@@ -98,7 +98,7 @@ int		k_rel(int key, t_data *d)
 	return (0);
 }
 
-void	k_apply(t_data *d)
+void		k_apply(t_data *d)
 {
 	if (d->key & LEFT && d->x_pos < 2)
 		d->x_pos += d->zoom / 25;

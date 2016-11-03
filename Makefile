@@ -6,7 +6,7 @@
 #    By: aviau <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/11 11:02:36 by aviau             #+#    #+#              #
-#    Updated: 2016/10/29 17:52:23 by aviau            ###   ########.fr        #
+#    Updated: 2016/11/03 17:56:25 by aviau            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC=$(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ=$(addprefix $(OBJ_PATH),$(OBJ_NAME))
 INC=-I./include -I./libft -I ./libmlx
 ARG=-L./libft -lft -lmlx -lpthread -framework OpenGl -framework AppKit
-CFLAGS = -Wall -Wextra -O2 -O3
+CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 	@printf "\e[33m$(NAME)\t\e[32m[OK]\n"
